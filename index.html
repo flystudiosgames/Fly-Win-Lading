@@ -1,58 +1,92 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <script type='text/javascript' src='jquery.min.js'></script>
-    <script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery/jquery-ui-1.8.17.custom.min.js"></script>
-    <script type="text/javascript" src="js/jspdf.js"></script>
-    <script type="text/javascript" src="js/adler32cs.js"></script>
-    <script type="text/javascript" src="js/FileSaver.js"></script>
-    <script type="text/javascript" src="js/Blob.js"></script>
-    <script type="text/javascript" src="js/jspdf.plugin.addimage.js"></script>
-    <script type="text/javascript" src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
-    <script type="text/javascript" src="js/jspdf.plugin.split_text_to_size.js"></script>
-    <script type="text/javascript" src="js/jspdf.plugin.from_html.js"></script>
-    <script type="text/javascript">          
-        function pdfReporte( dato1 , dato2 , dato3, nombre )
-        {                  
-            doc = new jsPDF('p', 'pt', 'a4');
-            var width = doc.internal.pageSize.width;    
-            var height = doc.internal.pageSize.height;
-            
-            doc.setFontSize(40);
-            doc.addImage(dato1, 'JPEG', 0, 0, width, height);  
-
-            if(dato2 != "")
-            {
-                doc.addPage();
-                doc.addImage(dato2, 'JPEG', 0, 0, width, height);
-            }
-            
-            if(dato3 != "")
-            {
-                doc.addPage();
-                doc.addImage(dato3, 'JPEG', 0, 0, width, height);
-            }
-
-            doc.save(nombre + '.pdf');                                        
-            //gameInstance.SendMessage('ScriptPantalla', 'ActivarBotonTerminar');
-        }        
-    </script>
-
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>CloudLabs | %UNITY_WEB_NAME%</title>
-    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
-    <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "%UNITY_WEBGL_BUILD_URL%");
-    </script>
-    <style>
-      body { margin: 0; }
-      #gameContainer { width: 100vw; height: 100vh; }
-      canvas { width: 100%; height: 100%; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Fly Win Landing</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
   </head>
-  <body>
-    <div id="gameContainer"></div>
+  <body class="dark">
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+    <div id="loading-cover" style="display:none;">
+      <div id="unity-loading-bar">
+        <div id="unity-logo"><img src="logo.png"></div>
+        <div id="unity-progress-bar-empty" style="display: none;">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <div id="unity-fullscreen-button" style="display: none;"></div>
+    <script>
+      const hideFullScreenButton = "";
+      const buildUrl = "Build";
+      const loaderUrl = buildUrl + "/Wly Win.loader.js";
+      const config = {
+        dataUrl: buildUrl + "/Wly Win.data.unityweb",
+        frameworkUrl: buildUrl + "/Wly Win.framework.js.unityweb",
+        codeUrl: buildUrl + "/Wly Win.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Fly Win Landing",
+        productVersion: "1.0",
+      };
+
+      const container = document.querySelector("#unity-container");
+      const canvas = document.querySelector("#unity-canvas");
+      const loadingCover = document.querySelector("#loading-cover");
+      const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+      const progressBarFull = document.querySelector("#unity-progress-bar-full");
+      const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      const spinner = document.querySelector('.spinner');
+
+      const canFullscreen = (function() {
+        for (const key of [
+            'exitFullscreen',
+            'webkitExitFullscreen',
+            'webkitCancelFullScreen',
+            'mozCancelFullScreen',
+            'msExitFullscreen',
+          ]) {
+          if (key in document) {
+            return true;
+          }
+        }
+        return false;
+      }());
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        config.devicePixelRatio = 1;
+      }
+      loadingCover.style.display = "";
+
+      const script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          spinner.style.display = "none";
+          progressBarEmpty.style.display = "";
+          progressBarFull.style.width = `${100 * progress}%`;
+        }).then((unityInstance) => {
+          loadingCover.style.display = "none";
+          if (canFullscreen) {
+            if (!hideFullScreenButton) {
+              fullscreenButton.style.display = "";
+            }
+            fullscreenButton.onclick = () => {
+              unityInstance.SetFullscreen(1);
+            };
+          }
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
   </body>
 </html>
