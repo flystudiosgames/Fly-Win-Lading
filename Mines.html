@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mines Game</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Lilita One Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #090F1E;
+            color: #FFF;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            flex-direction: column;
+        }
+
+        .screen.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        #luckyJetScreen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            background-color: #FFF;
+            color: #000;
+            text-align: center;
+            width: 80vw;
+            max-width: 18rem;
+        }
+
+        .card .btn {
+            margin-top: 1vh;
+        }
+
+        #drawResult {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+        
+        .back-button {
+            margin-top: 3vh;
+            padding: 1vh 3vw;
+            font-size: 2.5vw;
+            border-radius: 20px;
+            width: 50vw;
+            max-width: 150px;
+        }
+
+        @media (min-width: 768px) {
+            .back-button {
+                font-size: 16px;
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Mines Screen -->
+    <div id="minesScreen" class="screen active">
+        <div class="card-container">
+            <div class="card">
+                <img class="card-img-top" src="https://via.placeholder.com/286x180.png?text=Lucky+Jet+Image" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Mines</h5>
+                    <p class="card-text">Dare to explore the mines? Discover hidden treasures!</p>
+                </div>
+                <a href="#" class="btn btn-primary">Start Digging</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

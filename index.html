@@ -50,8 +50,10 @@
         }
 
         #loadingScreen img {
-            width: 20vw;
+            width: 30vw; /* Adjust width as needed */
             height: auto;
+            position: relative;
+            top: -100px; /* Move the image up by 10px */
         }
 
         #loadingScreen .spinner-border {
@@ -116,16 +118,6 @@
             margin-top: 1vh;
         }
 
-        .back-button {
-            margin-top: 3vh;
-            padding: 1vh 3vw;
-            font-size: 2.5vw;
-            background-color: #555;
-            border-radius: 20px;
-            width: 50vw;
-            max-width: 150px;
-        }
-
         .home-text {
             font-family: 'Lilita One', sans-serif;
             margin-bottom: 2vh;
@@ -159,31 +151,22 @@
                 width: 200px;
             }
 
-            .back-button {
-                font-size: 16px;
-                width: 150px;
-            }
-
             .home-text {
                 font-size: 2.5rem;
             }
-        }
-
-        #drawResult {
-            font-size: 2rem;
-            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="screen active">
-        <img src="Resources/1Win Logo Png.png" alt="1Win Logo">
-        <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+<!-- Loading Screen -->
+<div id="loadingScreen" class="screen active">
+    <img src="Resources/1Win Logo Png.png" alt="1Win Logo">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
+</div>
+
 
     <!-- Home Screen -->
     <div id="homeScreen" class="screen">
@@ -198,67 +181,19 @@
                     <h5 class="card-title">Welcome to Fly Win</h5>
                     <p class="card-text">Choose your game:</p>
                     <div class="button-container">
-                        <button onclick="transitionToScreen('luckyJetScreen')">Lucky Jet</button>
-                        <button onclick="transitionToScreen('minesScreen')">Mines</button>
+                        <button onclick="window.location.href='LuckyJet.html'">Lucky Jet</button>
+                        <button onclick="window.location.href='Mines.html'">Mines</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Lucky Jet Screen -->
-    <div id="luckyJetScreen" class="screen">
-        <div class="card-container">
-            <div class="card">
-                <img class="card-img-top" src="https://via.placeholder.com/286x180.png?text=Lucky+Jet+Image"
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Lucky Jet</h5>
-                    <p class="card-text">Explore the Lucky Jet game. Try your luck and win big!</p>
-                    <div id="drawResult">x1.00</div>
-                    <button class="btn btn-primary" onclick="luckyJetGetSignal()">Get Signal</button>
-                </div>
-            </div>
-            <button class="back-button" onclick="transitionToScreen('homeScreen')">Back to Home</button>
-        </div>
-    </div>
-
-    <!-- Mines Screen -->
-    <div id="minesScreen" class="screen">
-        <div class="card-container">
-            <div class="card">
-                <img class="card-img-top" src="https://via.placeholder.com/286x180.png?text=Mines+Image" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Mines</h5>
-                    <p class="card-text">Dare to explore the mines? Discover hidden treasures!</p>
-                    <a href="#" class="btn btn-primary">Start Digging</a>
-                </div>
-            </div>
-            <button class="back-button" onclick="transitionToScreen('homeScreen')">Back to Home</button>
-        </div>
-    </div>
-
     <script>
-        // Global variables for the Lucky Jet game
-        let increaseSpeed = 0.1; // Speed of incrementing display value
-        let animationDuration = 2000; // Duration of the interpolation animation in ms
-        let minimRange = 2.0;
-        let maximRange = 20.0;
-        let generatedValue;
-
         // Initial loading screen display for 3 seconds
         setTimeout(function () {
             showScreen('homeScreen');
-        }, 3000);
-
-        // Function to show a specific screen after displaying the loading screen
-        function transitionToScreen(screenId) {
-            showScreen('loadingScreen');
-
-            setTimeout(function () {
-                showScreen(screenId);
-            }, 3000);
-        }
+        }, 1000);
 
         // Function to show a specific screen and hide others
         function showScreen(screenId) {
@@ -270,52 +205,6 @@
                     screen.classList.remove('active');
                 }
             });
-        }
-
-        // Lucky Jet game signal function
-        function luckyJetGetSignal() {
-            console.log("LuckyJetGetSignal");
-
-            // Generate a random float number between minimRange and maximRange
-            generatedValue = (Math.random() * (maximRange - minimRange) + minimRange).toFixed(2);
-
-            // Disable the button to prevent multiple clicks during animation
-            setButtonState(false);
-
-            // Start the animation to incrementally display the value
-            startScoreInterpolation();
-        }
-
-        // Interpolation animation function
-        function startScoreInterpolation() {
-            let startValue = 1.0;
-            let startTime = Date.now();
-
-            function update() {
-                let elapsedTime = Date.now() - startTime;
-                let progress = Math.min(elapsedTime / animationDuration, 1);
-                let currentValue = (1.0 + (generatedValue - 1.0) * progress).toFixed(2);
-
-                updateDrawResultText(currentValue);
-
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                } else {
-                    setButtonState(true);
-                }
-            }
-
-            requestAnimationFrame(update);
-        }
-
-        // Update the draw result text
-        function updateDrawResultText(value) {
-            document.getElementById('drawResult').textContent = 'x' + value;
-        }
-
-        // Enable or disable the button
-        function setButtonState(activeSelf) {
-            document.querySelector('.btn-primary').disabled = !activeSelf;
         }
     </script>
 </body>
