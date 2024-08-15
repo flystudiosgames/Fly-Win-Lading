@@ -1,92 +1,200 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Fly Win Landing</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-  </head>
-  <body class="dark">
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas"></canvas>
-    </div>
-    <div id="loading-cover" style="display:none;">
-      <div id="unity-loading-bar">
-        <div id="unity-logo"><img src="logo.png"></div>
-        <div id="unity-progress-bar-empty" style="display: none;">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-        <div class="spinner"></div>
-      </div>
-    </div>
-    <div id="unity-fullscreen-button" style="display: none;"></div>
-    <script>
-      const hideFullScreenButton = "";
-      const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/Wly Win.loader.js";
-      const config = {
-        dataUrl: buildUrl + "/Wly Win.data.unityweb",
-        frameworkUrl: buildUrl + "/Wly Win.framework.js.unityweb",
-        codeUrl: buildUrl + "/Wly Win.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "Fly Win Landing",
-        productVersion: "1.0",
-      };
-
-      const container = document.querySelector("#unity-container");
-      const canvas = document.querySelector("#unity-canvas");
-      const loadingCover = document.querySelector("#loading-cover");
-      const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-      const progressBarFull = document.querySelector("#unity-progress-bar-full");
-      const fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      const spinner = document.querySelector('.spinner');
-
-      const canFullscreen = (function() {
-        for (const key of [
-            'exitFullscreen',
-            'webkitExitFullscreen',
-            'webkitCancelFullScreen',
-            'mozCancelFullScreen',
-            'msExitFullscreen',
-          ]) {
-          if (key in document) {
-            return true;
-          }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Screen Layout with Bootstrap</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #090F1E;
+            color: #FFF;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
         }
-        return false;
-      }());
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        config.devicePixelRatio = 1;
-      }
-      loadingCover.style.display = "";
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            flex-direction: column;
+        }
 
-      const script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          spinner.style.display = "none";
-          progressBarEmpty.style.display = "";
-          progressBarFull.style.width = `${100 * progress}%`;
-        }).then((unityInstance) => {
-          loadingCover.style.display = "none";
-          if (canFullscreen) {
-            if (!hideFullScreenButton) {
-              fullscreenButton.style.display = "";
+        .screen.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        #loadingScreen {
+            background-color: #090F1E;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #loadingScreen img {
+            width: 20vw;
+            height: auto;
+        }
+
+        #loadingScreen .spinner-border {
+            margin-top: 3vh;
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+        }
+
+        #homeScreen {
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            padding: 1.5vh 3vw;
+            font-size: 2.5vw;
+            color: #FFF;
+            background-color: #1E90FF;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 50vw;
+            max-width: 200px;
+        }
+
+        button:hover {
+            background-color: #1C7ED6;
+        }
+
+        button:active {
+            background-color: #1864AB;
+        }
+
+        .card {
+            background-color: #FFF;
+            color: #000;
+            text-align: center;
+            width: 80vw;
+            max-width: 18rem;
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card .btn {
+            margin-top: 1vh;
+        }
+
+        .back-button {
+            margin-top: 3vh;
+            padding: 1vh 3vw;
+            font-size: 2.5vw;
+            background-color: #555;
+            border-radius: 20px;
+            width: 50vw;
+            max-width: 150px;
+        }
+
+        @media (min-width: 768px) {
+            #loadingScreen img {
+                width: 150px;
             }
-            fullscreenButton.onclick = () => {
-              unityInstance.SetFullscreen(1);
-            };
-          }
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
+
+            button {
+                font-size: 18px;
+                width: 200px;
+            }
+
+            .back-button {
+                font-size: 16px;
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen active">
+        <img src="Resources/1Win Logo Png.png" alt="1Win Logo">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen">
+        <div class="button-container">
+            <button onclick="showScreen('luckyJetScreen')">Lucky Jet</button>
+            <button onclick="showScreen('minesScreen')">Mines</button>
+        </div>
+    </div>
+
+    <!-- Lucky Jet Screen -->
+    <div id="luckyJetScreen" class="screen">
+        <div class="card-container">
+            <div class="card">
+                <img class="card-img-top" src="https://via.placeholder.com/286x180.png?text=Lucky+Jet+Image" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Lucky Jet</h5>
+                    <p class="card-text">Explore the Lucky Jet game. Try your luck and win big!</p>
+                    <a href="#" class="btn btn-primary">Play Now</a>
+                </div>
+            </div>
+            <button class="back-button" onclick="showScreen('homeScreen')">Back to Home</button>
+        </div>
+    </div>
+
+    <!-- Mines Screen -->
+    <div id="minesScreen" class="screen">
+        <div class="card-container">
+            <div class="card">
+                <img class="card-img-top" src="https://via.placeholder.com/286x180.png?text=Mines+Image" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Mines</h5>
+                    <p class="card-text">Dare to explore the mines? Discover hidden treasures!</p>
+                    <a href="#" class="btn btn-primary">Start Digging</a>
+                </div>
+            </div>
+            <button class="back-button" onclick="showScreen('homeScreen')">Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Show the home screen after 3 seconds
+        setTimeout(function() {
+            showScreen('homeScreen');
+        }, 3000);
+
+        // Function to show a specific screen and hide others
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                if (screen.id === screenId) {
+                    screen.classList.add('active');
+                } else {
+                    screen.classList.remove('active');
+                }
+            });
+        }
     </script>
-  </body>
+</body>
 </html>
