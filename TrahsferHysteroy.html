@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Jet Game</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Lilita One Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <!-- Include Roboto Condensed Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #090F1E;
+            color: #FFF;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            flex-direction: column;
+        }
+
+        .screen.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        #luckyJetScreen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .card {
+            background-color: #1C232A;
+            color: #000;
+            text-align: center;
+            width: 80vw;
+            max-width: 18rem;
+        }
+
+        .transferHystory {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding: 5px;
+            background-color: #2A2F3A;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1px;
+            background-color: #3A3F4A;
+            border-radius: 3px;
+            color: #FFF;
+            font-family: 'Roboto Condensed', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        .history-item.fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .amount {
+            color: #70FA00;
+            transition: transform 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Lucky Jet Screen -->
+    <div id="luckyJetScreen" class="screen active">
+        <div class="card">
+            <div class="transferHystory">
+                <!-- Dynamic content will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const transferHistoryContainer = document.querySelector('.transferHystory');
+
+            function createHistoryItem(id, amount) {
+                const historyItem = document.createElement('div');
+                historyItem.classList.add('history-item', 'fade-in');
+
+                const idElement = document.createElement('div');
+                idElement.textContent = `User ID: ${id}****`;
+
+                const amountElement = document.createElement('div');
+                amountElement.classList.add('amount');
+                amountElement.textContent = `$0.00`;
+
+                historyItem.appendChild(idElement);
+                historyItem.appendChild(amountElement);
+
+                setTimeout(() => {
+                    animateAmount(amountElement, amount);
+                }, 100);
+
+                return historyItem;
+            }
+
+            function generateRandomID() {
+                const digits = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+                let id = '';
+                for (let i = 0; i < 5; i++) {
+                    const randomIndex = Math.floor(Math.random() * digits.length);
+                    id += digits[randomIndex];
+                }
+                return id;
+            }
+
+            function generateRandomAmount() {
+                return Math.floor(Math.random() * (1000 - 50 + 1)) + 50;
+            }
+
+            function animateAmount(element, finalAmount) {
+                let currentAmount = 0;
+                const interval = setInterval(() => {
+                    if (currentAmount < finalAmount) {
+                        currentAmount += Math.ceil(finalAmount / 50);
+                        const randomDecimal = (Math.random() * 0.99).toFixed(2);
+                        element.textContent = `+ $${Math.min(currentAmount, finalAmount).toFixed(0)}.${randomDecimal.slice(2)}`;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 10);
+            }
+
+            function refreshTransferHistory() {
+                transferHistoryContainer.innerHTML = '';
+                for (let i = 0; i < 5; i++) {
+                    const randomID = generateRandomID();
+                    const randomAmount = generateRandomAmount();
+                    const historyItem = createHistoryItem(randomID, randomAmount);
+                    transferHistoryContainer.appendChild(historyItem);
+                }
+            }
+
+            refreshTransferHistory(); // Initial population
+            setInterval(refreshTransferHistory, 3000); // Refresh every 3 seconds
+        });
+    </script>
+</body>
+
+</html>
