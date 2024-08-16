@@ -34,28 +34,19 @@
             text-align: center;
             width: 80vw;
             max-width: 18rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Add shadow for a 3D effect */
-            border-radius: 0.5rem;
-            transform: scale(1);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            transform: scale(1.05); /* Slight zoom on hover */
         }
 
         .card .card-body {
             background-color: #2B3642; /* Set background color */
             color: #FFFFFF; /* Set text color to white */
             font-family: 'Lilita One', sans-serif; /* Apply Lilita One font */
-            padding: 1.5rem; /* Add some padding for better spacing */
+            padding: 1rem; /* Add some padding for better spacing */
             border-radius: 0.5rem; /* Optional: for rounded corners */
         }
 
         .card .card-body h5,
         .card .card-body p {
             margin: 0; /* Remove default margins */
-            animation: fadeIn 1s ease-in-out; /* Fade-in effect for text */
         }
 
         .card .card-body h5 {
@@ -81,7 +72,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease;
             width: 50vw;
             max-width: 200px;
             display: flex;
@@ -92,14 +83,10 @@
 
         .button-container button:hover {
             background-color: #1C7ED6;
-            transform: translateY(-3px); /* Slight lift on hover */
-            box-shadow: 0 5px 15px rgba(28, 126, 214, 0.4); /* Shadow on hover */
         }
 
         .button-container button:active {
             background-color: #1864AB;
-            transform: translateY(0); /* Reset lift on click */
-            box-shadow: 0 3px 8px rgba(24, 100, 171, 0.4); /* Smaller shadow on click */
         }
 
         .home-text {
@@ -107,7 +94,6 @@
             margin-bottom: 2vh;
             font-size: 4vw;
             text-align: center;
-            animation: slideDown 1s ease-in-out; /* Slide-in effect for title */
         }
 
         .home-text span {
@@ -125,27 +111,6 @@
         .home-text .seven {
             color: #E3D71E;
         }
-
-        /* Keyframes for animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 
@@ -156,12 +121,12 @@
             <span class="fly">fly</span> <span class="win">win</span> <span class="seven">777</span>
         </div>
         <div class="card-container">
-            <div class="card">
+            <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Welcome to Fly Win</h5>
                     <p class="card-text">Choose your game:</p>
                     <div class="button-container">
-                        <button onclick="window.location.href='index.html'">LounchBot</button>
+                        <button onclick="window.location.href='Home.html'">LounchBot</button>
                         <p>Create an account below.</p>
                         <button onclick="window.location.href='https://www.google.com/'">Registry</button>
                     </div>
