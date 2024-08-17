@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #090F1E;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Centrează orizontal */
+            align-items: center; /* Centrează vertical */
+        }
+        .container-wrapper {
+            display: flex;
+            align-items: center; /* Centrează vertical conținutul */
+            flex-direction: column;
+            height: 100%; /* Ocupă întreaga înălțime disponibilă */
+            width: 100%; /* Ocupă întreaga lățime disponibilă */
+        }
+        .container {
+            background-color: #6892ff; /* Fundalul containerului */
+            padding: 20px;
+            margin: 3px 0; /* Spațiu între containere */
+            box-sizing: border-box; /* Include padding și margin în dimensiunea totală */
+            display: flex;
+            justify-content: center; /* Centrează orizontal conținutul */
+            align-items: center; /* Centrează vertical conținutul */
+            width: 60vh; /* Lățimea pentru container */
+            height: 100%; /* Înălțimea pentru container */
+            flex: 1; /* Fiecare container va avea dimensiunea egală */
+        }
+        .container:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .btn-success-custom {
+            margin: 10px 0; /* Spațiu între butoane */
+            font-family: 'Vegur-Bold', sans-serif; /* Fontul pentru text */
+            font-weight: bold;
+            text-transform: uppercase; /* Textul să fie cu majuscule */
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="container">Container 1</div>
+        <div class="container">
+            <button type="button" class="btn btn-success btn-success-custom">Lucky Jet</button>
+            <button type="button" class="btn btn-success btn-success-custom">Mines</button>
+        </div>
+        <div class="container">Container 3</div>
+    </div>
+</body>
+</html>
