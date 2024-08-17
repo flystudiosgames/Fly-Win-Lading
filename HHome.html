@@ -70,57 +70,25 @@
             align-items: center;
             gap: 2vh;
             position: relative;
-        }
-
-        .button-container {
-        display: flex;
-        flex-direction: column; /* Aranjează butoanele pe verticală */
-        align-items: center;
-        gap: 1vh; /* Spațiere verticală între butoane */
-    }
-
-    .button-container button {
-    font-family: 'Lilita One', sans-serif;
-    padding: 0.5vh 4.5vw; /* Adjusted to make buttons longer */
-    font-size: 4vw;
-    color: #FFF;
-    background-color: #1E90FF;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 75vw; /* Increased width to make buttons longer */
-    max-width: 220px; /* Increased max width proportionally */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-        .button-container button img {
-        width: 100px; /* Reduce dimensiunea imaginilor */
-        height: auto;
-    }
-
- .button-container button:hover {
-    background-color: #1C7ED6;
-}
-
-.button-container button:active {
-    background-color: #1864AB;
-}
-        .card {
-            background-color: #0b1326;
-            color: #000;
-            text-align: center;
-            width: 80vw;
-            max-width: 18rem;
+            width: 100%;
+            height: 100%;
         }
 
         .card-container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .card {
+            background-color: #0b1326;
+            color: #000;
+            text-align: center;
+            width: 80vw;
+            max-width: 18rem;
         }
 
         .card .card-body {
@@ -139,6 +107,44 @@
 
         .card .card-body p {
             font-size: 1rem; /* Adjust font size as needed */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Aranjează butoanele pe verticală */
+            align-items: center;
+            gap: 1vh; /* Spațiere verticală între butoane */
+        }
+
+        .button-container button {
+            font-family: 'Lilita One', sans-serif;
+            padding: 0.5vh 4.5vw; /* Adjusted to make buttons longer */
+            font-size: 4vw;
+            color: #FFF;
+            background-color: #1E90FF;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 75vw; /* Increased width to make buttons longer */
+            max-width: 220px; /* Increased max width proportionally */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .button-container button img {
+            width: 100px; /* Reduce dimensiunea imaginilor */
+            height: auto;
+        }
+
+        .button-container button:hover {
+            background-color: #1C7ED6;
+        }
+
+        .button-container button:active {
+            background-color: #1864AB;
         }
 
         .home-text {
@@ -250,44 +256,27 @@
 
     <!-- Home Screen -->
     <div id="homeScreen" class="screen">
-
         <div class="card-container">
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <!-- Gifts -->
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <a href="Prizes.html">
                         <img src="Resources/Gifts.png" alt="Gifts Image" class="img-fluid">
                     </a>
                 </div>
-                
-
-
                 <div class="card-body">
                     <h5 class="card-title">Select Cracked Game</h5>
                 </div>
-
-
                 <div class="button-container">
-                    
-                   <button onclick="window.location.href='LuckyJet.html'">
-    Lucky Jet
-</button>
-<button onclick="window.location.href='Mines.html'">
-    Mines
-</button>
-
+                    <button onclick="window.location.href='LuckyJet.html'">Lucky Jet</button>
+                    <button onclick="window.location.href='Mines.html'">Mines</button>
                 </div>
-
                 <div class="card-body">
                     <h5 class="card-title">Online Transfers</h5>
                 </div>
-
-
                 <div class="transferHystory">
                     <!-- Dynamic content will be added here -->
                 </div>
-         
-         
             </div>
         </div>
     </div>
@@ -310,77 +299,46 @@
 
                 const amountElement = document.createElement('div');
                 amountElement.classList.add('amount');
-                amountElement.textContent = `$0.00`;
+                amountElement.textContent = `+${amount} USD`;
 
                 historyItem.appendChild(idElement);
                 historyItem.appendChild(amountElement);
 
-                setTimeout(() => {
-                    animateAmount(amountElement, amount);
-                }, 100);
-
                 return historyItem;
             }
 
-            function generateRandomID() {
-                const digits = [1, 2, 3, 4, 5, 6, 7, 8, 0];
-                let id = '';
-                for (let i = 0; i < 5; i++) {
-                    const randomIndex = Math.floor(Math.random() * digits.length);
-                    id += digits[randomIndex];
-                }
-                return id;
-            }
-
-            function generateRandomAmount() {
-                return Math.floor(Math.random() * (1000 - 50 + 1)) + 50;
-            }
-
-            function animateAmount(element, finalAmount) {
-                let currentAmount = 0;
-                const interval = setInterval(() => {
-                    if (currentAmount < finalAmount) {
-                        currentAmount += Math.ceil(finalAmount / 50);
-                        const randomDecimal = (Math.random() * 0.99).toFixed(2);
-                        element.textContent = `+ $${Math.min(currentAmount, finalAmount).toFixed(0)}.${randomDecimal.slice(2)}`;
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 10);
-            }
-
-            function refreshTransferHistory() {
+            function animateTransferHistory() {
                 transferHistoryContainer.innerHTML = '';
-                for (let i = 0; i < 5; i++) {
-                    const randomID = generateRandomID();
-                    const randomAmount = generateRandomAmount();
-                    const historyItem = createHistoryItem(randomID, randomAmount);
+
+                const historyData = [
+                    { id: '1234', amount: '25' },
+                    { id: '5678', amount: '50' },
+                    { id: '9101', amount: '75' }
+                ];
+
+                historyData.forEach(data => {
+                    const historyItem = createHistoryItem(data.id, data.amount);
                     transferHistoryContainer.appendChild(historyItem);
-                }
+
+                    setTimeout(() => {
+                        historyItem.classList.add('fade-in');
+                    }, 100);
+                });
             }
 
-            refreshTransferHistory(); // Initial population
-            setInterval(refreshTransferHistory, 3000); // Refresh every 3 seconds
+            function switchScreens() {
+                const loadingScreen = document.getElementById('loadingScreen');
+                const homeScreen = document.getElementById('homeScreen');
+
+                setTimeout(() => {
+                    loadingScreen.classList.remove('active');
+                    homeScreen.classList.add('active');
+                    animateTransferHistory();
+                }, 3000);
+            }
+
+            switchScreens();
         });
-    </script>
-
-    <script>
-        // Initial loading screen display for 1 second
-        setTimeout(function () {
-            showScreen('homeScreen');
-        }, 1000);
-
-        // Function to show a specific screen and hide others
-        function showScreen(screenId) {
-            const screens = document.querySelectorAll('.screen');
-            screens.forEach(screen => {
-                if (screen.id === screenId) {
-                    screen.classList.add('active');
-                } else {
-                    screen.classList.remove('active');
-                }
-            });
-        }
     </script>
 </body>
 
