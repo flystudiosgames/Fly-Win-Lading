@@ -38,6 +38,20 @@
             width: 100%;
             height: 50px;
             font-size: 1.2em;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .btn-success-custom.bouncing {
+            animation: scaleBounce 1s infinite;
+        }
+
+        @keyframes scaleBounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .text-content {
@@ -177,7 +191,7 @@
         <div class="text-content">
             <p>Hello User</p>
         </div>
-        <button type="button" class="btn btn-success btn-success-custom" data-bs-toggle="modal" data-bs-target="#launchBotModal">Launch Bot</button>
+        <button type="button" class="btn btn-success btn-success-custom bouncing" data-bs-toggle="modal" data-bs-target="#launchBotModal">Launch Bot</button>
     </div>
 
     <!-- Panel 2 -->
@@ -219,6 +233,7 @@ document.getElementById('launchBotModal').addEventListener('show.bs.modal', func
     const openProfileButton = document.getElementById('openProfileButton');
     const footer = document.querySelector('.modal-footer');
     const terminalContent = document.getElementById('terminal-content');
+    let serverID = generateServerID(); // Generate the server ID once to use in both places
 
     // Function to get the current date and time
     function getCurrentDateTime() {
@@ -265,25 +280,27 @@ document.getElementById('launchBotModal').addEventListener('show.bs.modal', func
         "<span class='green-text'>Fetching server ID...</span>",
         "<span class='green-text'> </span>",
         `<span class='green-text'>Successfully Connected !</span>`,
-        `<span class='green-text'>Server ID : ${generateServerID()}</span>`,
+        `<span class='green-text'>Server ID: ${serverID}</span>`,
         `<span class='green-text'>Connected Date ${getCurrentDateTime()}</span>`,
         "<span class='green-text'> </span>",
     ];
 
     const fakeConnectionSteps = [
-        { message: "1Win connecting to server...", progress: 20 },
-        { message: "Connecting successfully...", progress: 40 },
-        { message: "Fetching server data...", progress: 60 },
-        { message: "Finalizing connection...", progress: 80 },
-        { message: `Your Server ID: ${generateServerID()}`, progress: 100 }
-    ];
+    { message: `<span class="white-text">1Win connecting to server...</span>`, progress: 20 },
+    { message: `<span class="white-text">Connecting successfully...</span>`, progress: 40 },
+    { message: `<span class="white-text">Fetching server data...</span>`, progress: 60 },
+    { message: `<span class="white-text">Finalizing connection...</span>`, progress: 80 },
+    { message: `<span class="white-text">Your Server </span> <span class="green-text"> ID : ${serverID}</span>`, progress: 100 }
+];
+
+
 
     let stepIndex = 0;
     let terminalIndex = 0;
 
     function showNextStep() {
         if (stepIndex < fakeConnectionSteps.length) {
-            modalLabel.textContent = fakeConnectionSteps[stepIndex].message;
+            modalLabel.innerHTML = fakeConnectionSteps[stepIndex].message;
             progressBar.style.width = fakeConnectionSteps[stepIndex].progress + '%';
             stepIndex++;
             setTimeout(showNextStep, 1000);
