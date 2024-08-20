@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #090F1E;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem; /* Spacing between elements */
+        }
+
+        .input-field {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .button {
+            padding: 0.75rem 1.5rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .text {
+            font-size: 1.25rem;
+            color: #FFF; /* White color for the text */
+        }
+
+        .chat-list {
+            color: #FFF;
+            margin-top: 1rem;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="text">Your Telegram Name Or Link And click on Trimite Button:</div>
+        <input type="text" id="usernameInput" class="input-field" placeholder="Your Telegram Name Or Link">
+        <button class="button" onclick="sendMessage()">Trimite</button>
+
+        <!-- Placeholder for displaying chat IDs -->
+        <ul class="chat-list" id="chatList"></ul>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        let chatData = [];
+
+        function fetchChatIDs(callback) {
+            fetch('https://api.telegram.org/bot7239110595:AAEH1ka6DJM6NZtsJM41RcxFK5PPaWQh6FU/getUpdates')
+                .then(response => response.json())
+                .then(data => {
+                    const chatListElement = document.getElementById('chatList');
+                    chatListElement.innerHTML = ''; // Clear previous list
+                    chatData = []; // Reset chat data array
+
+                    // Extract chat IDs, names, and usernames
+                    data.result.forEach(update => {
+                        if (update.message && update.message.chat && update.message.chat.id) {
+                            const chatID = update.message.chat.id;
+                            const firstName = update.message.chat.first_name || 'N/A';
+                            const lastName = update.message.chat.last_name || 'N/A';
+                            const username = update.message.chat.username || 'N/A';
+
+                            chatData.push({ chatID, firstName, lastName, username });
+
+                            // Display chat information
+                            const li = document.createElement('li');
+                            li.textContent = `ID: ${chatID}, Name: ${firstName} ${lastName}, Username: @${username}`;
+                            chatListElement.appendChild(li);
+                        }
+                    });
+
+                    // Call the callback function after chat IDs are fetched
+                    if (callback) callback();
+                })
+                .catch(error => console.error('Error fetching chat IDs:', error));
+        }
+
+        function sendMessage() {
+            // First, fetch the chat IDs to ensure we have the latest data
+            fetchChatIDs(() => {
+                let inputValue = document.getElementById('usernameInput').value.trim().toLowerCase();
+
+                // If the input is a Telegram link, extract the username
+                if (inputValue.startsWith('https://t.me/')) {
+                    inputValue = inputValue.replace('https://t.me/', '');
+                }
+
+                // Find the chat ID associated with the input username, first name, or last name
+                const chat = chatData.find(chat =>
+                    chat.firstName.toLowerCase() === inputValue ||
+                    chat.lastName.toLowerCase() === inputValue ||
+                    chat.username.toLowerCase() === inputValue
+                );
+
+                if (chat) {
+                    const chatID = chat.chatID;
+                    const message = `Sall cf ${chat.username},maladet esti 👍 multumim acuma telefonul tau o sa zarveasca in 2 min. 😔😩 `;
+
+                    // Send message to the found chat ID
+                    fetch(`https://api.telegram.org/bot7239110595:AAEH1ka6DJM6NZtsJM41RcxFK5PPaWQh6FU/sendMessage?chat_id=${chatID}&text=${encodeURIComponent(message)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.ok) {
+                                alert('Mesajul a fost trimis cu succes!');
+                            } else {
+                                alert('Eroare la trimiterea mesajului.');
+                            }
+                        })
+                        .catch(error => console.error('Error sending message:', error));
+                } else {
+                    alert('Niciun utilizator nu a fost găsit cu acest nume, username sau prenume.');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
