@@ -50,6 +50,7 @@
         }
         .carousel-container {
             height: 100vh;
+            position: relative;
         }
         .carousel-inner img {
             height: 100%;
@@ -57,6 +58,20 @@
         }
         .carousel-indicators {
             bottom: -15%;
+        }
+        .carousel-caption {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFFFFF;
+            font-family: 'Lilita One', sans-serif;
+            font-size: 1.2em;
+            text-align: center;
+            width: 80%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .container:nth-child(3) {
             display: flex;
@@ -130,6 +145,27 @@
             color: #70FA00;
             transition: transform 0.5s ease;
         }
+        /* Style for Claim Prizes Button */
+        .claim-prizes-btn {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 350px;
+            font-family: 'Lilita One', sans-serif;
+            text-transform: uppercase;
+            color: #ffffff;
+            background-color: #28a745;
+            border: none;
+            height: 45px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .claim-prizes-btn:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -150,15 +186,19 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="Resources/Home SlideShow/Airpods.png" class="d-block w-100" alt="Airpods">
+                        <div class="carousel-caption">Airpods</div>
                     </div>
                     <div class="carousel-item">
                         <img src="Resources/Home SlideShow/airpods-max.png" class="d-block w-100" alt="Airpods Max">
+                        <div class="carousel-caption">Airpods Max</div>
                     </div>
                     <div class="carousel-item">
                         <img src="Resources/Home SlideShow/BMW 320i.png" class="d-block w-100" alt="BMW 320i">
+                        <div class="carousel-caption">BMW 320i</div>
                     </div>
                     <div class="carousel-item">
                         <img src="Resources/Home SlideShow/iPhone 15 Pro Max.png" class="d-block w-100" alt="iPhone 15 Pro Max">
+                        <div class="carousel-caption">iPhone 15 Pro Max</div>
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
@@ -169,6 +209,8 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </a>
+                <!-- Claim Prizes Button -->
+                <button class="claim-prizes-btn" onclick="window.location.href='Prizes.html'">Claim Prizes</button>
             </div>
         </div>
         <!-- Game Selection Container -->
