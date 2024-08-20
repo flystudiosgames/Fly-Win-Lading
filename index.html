@@ -58,17 +58,19 @@
         }
 
         .progress-bar {
-            background-color: #70FA00;
+            background-color: #62d305;
             width: 0;
-            height: 100%;
-            transition: width 1s ease-in-out;
+            height: 10;
+            transition: width 1s ease-in;
         }
 
         .modal-content {
-            height: 50vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            background-color: #2A2F3A;
+            border-radius: 0;
         }
 
         .modal-body {
@@ -102,8 +104,8 @@
         }
 
         .terminal-content p {
-            margin: 2px 0; /* Reduce space between lines */
-            line-height: 1.2; /* Reduce line height */
+            margin: 2px 0;
+            line-height: 1.2;
         }
 
         .green-text {
@@ -138,22 +140,55 @@
             pointer-events: none;
             opacity: 0.5;
         }
+
+        #openProfileButton.bouncing {
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        #panel1, #panel2 {
+            display: none;
+        }
+
+        #panel1.active {
+            display: flex;
+        }
+
+        #panel2.active {
+            display: flex;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <!-- Panel 1 -->
+    <div id="panel1" class="container active">
         <div class="text-content">
-            <p>Your User ID: 532354234</p>
-            <p>Select The Game</p>
+            <p>Hello User</p>
         </div>
         <button type="button" class="btn btn-success btn-success-custom" data-bs-toggle="modal" data-bs-target="#launchBotModal">Launch Bot</button>
+    </div>
+
+    <!-- Panel 2 -->
+    <div id="panel2" class="container">
         <button type="button" class="btn btn-success btn-success-custom" onclick="window.location.href='https://1wfqtr.life/v3/lucky-jet-updated?p=hvdq'">Registry</button>
+        <button type="button" class="btn btn-success btn-success-custom" onclick="window.location.href='HackBot.html'">Open Hackbot</button>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="launchBotModal" tabindex="-1" aria-labelledby="launchBotModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-body">
                     <p id="launchBotModalLabel" class="text-center mb-4" style="font-family: 'Lilita One', sans-serif; font-size: 1.5em;">Connecting...</p>
@@ -167,7 +202,7 @@
                     </div>
                 </div>
                 <div class="modal-footer hidden">
-                    <button type="button" class="btn btn-success" id="openProfileButton" onclick="window.location.href='Home.html'" data-bs-dismiss="modal">Open Profile</button>
+                    <button type="button" class="btn btn-success" id="openProfileButton" data-bs-dismiss="modal">Open Profile</button>
                 </div>
             </div>
         </div>
@@ -251,26 +286,31 @@ document.getElementById('launchBotModal').addEventListener('show.bs.modal', func
             modalLabel.textContent = fakeConnectionSteps[stepIndex].message;
             progressBar.style.width = fakeConnectionSteps[stepIndex].progress + '%';
             stepIndex++;
-            setTimeout(showNextStep, 1000); // Show next step after 1 second
+            setTimeout(showNextStep, 1000);
         } else {
             setTimeout(() => {
-                footer.classList.remove('hidden'); // Show the button after the last step and a short delay
-                openProfileButton.style.pointerEvents = 'auto'; // Enable the button
-                openProfileButton.style.opacity = '1'; // Make the button fully opaque
-            }, 1000); // Delay to ensure the progress bar reaches 100%
+                footer.classList.remove('hidden');
+                openProfileButton.style.pointerEvents = 'auto';
+                openProfileButton.style.opacity = '1';
+                openProfileButton.classList.add('bouncing');
+            }, 1000);
         }
     }
 
     function addTerminalLines() {
         if (terminalIndex < terminalLines.length) {
             terminalContent.innerHTML += `<p>${terminalLines[terminalIndex]}</p>`;
-            terminalContent.scrollTop = terminalContent.scrollHeight; // Auto scroll to bottom
+            terminalContent.scrollTop = terminalContent.scrollHeight;
             terminalIndex++;
-            setTimeout(addTerminalLines, 5000 / terminalLines.length); // Adjust scrolling speed to complete in 5 seconds
+            setTimeout(addTerminalLines, 5000 / terminalLines.length);
         }
     }
 
-    // Start the sequence
+    openProfileButton.addEventListener('click', () => {
+        document.getElementById('panel1').classList.remove('active');
+        document.getElementById('panel2').classList.add('active');
+    });
+
     showNextStep();
     addTerminalLines();
 });
@@ -283,7 +323,6 @@ function generateServerID() {
     }
     return serverID;
 }
-
     </script>
 </body>
 
