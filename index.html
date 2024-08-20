@@ -236,6 +236,19 @@
             color: #ffffff;
             font-family: 'Lilita One', sans-serif;
         }
+
+        .notification {
+            background-color: #62d305;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
     </style>
 </head>
 
@@ -270,11 +283,19 @@
         <div class="text-content">
             <p>I registered with the provided link and I'm ready to launch the bot.</p>
         </div>
+        <button type="button" class="btn btn-success btn-success-custom" id="copyPromoCodeButton">
+            Copy promocode : <span style="color: #FFFF00;">FLYWINCASH</span>
+        </button>
         <div class="text-content">
             <img src="Resources/RegistryForm.PNG" alt="Registry Form" style="max-width: 100%; height: auto;">
         </div>
         <button type="button" class="btn btn-success btn-success-custom" onclick="window.open('https://1wfqtr.life/v3/lucky-jet-updated?p=hvdq', '_blank')">Open Link</button>
         <button type="button" class="btn btn-success btn-success-custom" id="backToPanel2">Back</button>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        Promocode <span style="color: #FFFF00;">FLYWINCASH</span> has been copied to clipboard!
     </div>
 
     <!-- Modal -->
@@ -434,6 +455,17 @@
         document.getElementById('backToPanel2').addEventListener('click', function () {
             document.getElementById('panel3').classList.remove('active');
             document.getElementById('panel2').classList.add('active');
+        });
+
+        document.getElementById('copyPromoCodeButton').addEventListener('click', function () {
+            const promoCode = "FLYWINCASH";
+            navigator.clipboard.writeText(promoCode).then(function () {
+                const notification = document.getElementById('notification');
+                notification.style.display = 'block';
+                setTimeout(function () {
+                    notification.style.display = 'none';
+                }, 2000);
+            });
         });
     </script>
 </body>
