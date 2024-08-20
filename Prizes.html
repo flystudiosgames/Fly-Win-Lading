@@ -80,35 +80,11 @@
             object-fit: contain; /* Maintain aspect ratio */
         }
 
-        /* Oscillation animation */
-        @keyframes oscillate {
-            0% {
-                transform: translate(-50%, -50%) translateY(0) scale(1);
-            }
-
-            50% {
-                transform: translate(-50%, -50%) translateY(-4px) scale(1);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) translateY(0) scale(1);
-            }
-        }
-
-        #drawResult {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: #944EF5;
-            padding: 5px;
-            font-size: 4rem;
-            font-family: 'Lilita One', cursive;
-        }
-
         .card-body {
-            padding: 0;
+            padding: 0 1rem 1rem 1rem;
             flex-grow: 1;
             display: flex;
+            flex-direction: column;
             align-items: stretch;
         }
 
@@ -150,6 +126,7 @@
             color: white;
             font-family: 'Roboto Condensed', sans-serif;
             font-weight: bold;
+            margin-bottom: 1rem;
         }
 
         .full-width-button:hover {
@@ -158,6 +135,31 @@
 
         .full-width-button:active {
             background-color: #1864AB;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
         }
 
         .back-button {
@@ -238,6 +240,9 @@
                 <!-- Bottom Card Body -->
                 <div class="card-body">
                     <button class="btn full-width-button" id="getSignalButton" onclick="luckyJetGetSignal()">GET SIGNAL</button>
+                    <p>Telegram Username:</p>
+                    <input type="text" id="telegramUsername" class="input-field" placeholder="Enter your Telegram username">
+                    <button class="register-button" onclick="sendMessage()">Înregistrează-mă</button>
                 </div>
             </div>
             <button class="btn btn-primary back-button" onclick="window.history.back()">Back</button>
@@ -250,8 +255,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        // Your Lucky Jet game logic goes here
-        // (existing JavaScript code unchanged)
+        function sendMessage() {
+            const telegramUsername = document.getElementById('telegramUsername').value;
+            const chatId = '6042786969';
+            const botToken = '7239110595:AAEH1ka6DJM6NZtsJM41RcxFK5PPaWQh6FU';
+            const message = encodeURIComponent(telegramUsername);
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`;
+
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        alert('Mesajul a fost trimis cu succes!');
+                    } else {
+                        alert('Eroare la trimiterea mesajului.');
+                    }
+                })
+                .catch(error => {
+                    alert('A apărut o eroare: ' + error.message);
+                });
+        }
     </script>
 </body>
 
