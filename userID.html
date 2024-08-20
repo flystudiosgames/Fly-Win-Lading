@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Data</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #090F1E;
+            color: #FFF;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container input {
+            padding: 1vh 2vw;
+            font-size: 2vw;
+            color: #000;
+            background-color: #FFF;
+            border: none;
+            border-radius: 50px;
+            text-align: center;
+            margin-bottom: 2vh;
+            width: 100vw;
+            max-width: 300px;
+        }
+
+        .container button {
+            padding: 1.5vh 3vw;
+            font-size: 2vw;
+            color: #FFF;
+            background-color: #1E90FF;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100vw;
+            max-width: 200px;
+        }
+
+        .container button:hover {
+            background-color: #1C7ED6;
+        }
+
+        .container button:active {
+            background-color: #1864AB;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" id="userId" placeholder="Enter User ID">
+        <button onclick="getUserData()">Get User Data</button>
+    </div>
+
+    <script>
+        function getUserData() {
+            const userId = document.getElementById('userId').value;
+
+            if (!userId) {
+                alert("Please enter a User ID.");
+                return;
+            }
+
+            // Placeholder URL for 1Win API endpoint
+            const url = `https://api.1win.com/userinfo?user_id=${userId}`;
+
+            // Simulate sending a request to the API
+            console.log("Fetching data from:", url);
+
+            // For actual implementation, use fetch to send the request
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("User data:", data);
+                    // You can further process or display the user data here
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+
+</html>
