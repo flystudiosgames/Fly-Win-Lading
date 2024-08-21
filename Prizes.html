@@ -186,6 +186,23 @@
         .close:hover {
             color: #CCC;
         }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .notification.error {
+            background-color: #dc3545;
+        }
     </style>
 </head>
 
@@ -249,29 +266,49 @@
         </div>
     </div>
 
+    <!-- Notification Popup -->
+    <div id="notification" class="notification"></div>
+
     <!-- Include jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = isError ? 'notification error' : 'notification';
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+
         function sendMessage() {
-            const telegramUsername = document.getElementById('telegramUsername').value;
-            const chatId = '6042786969';
+            const telegramUsername = document.getElementById('telegramUsername').value.trim();
+            if (!telegramUsername) {
+                showNotification('Username field cannot be empty.', true);
+                return;
+            }
+
+            const chatId = '6953089880';
             const botToken = '7239110595:AAEH1ka6DJM6NZtsJM41RcxFK5PPaWQh6FU';
             const message = encodeURIComponent(telegramUsername);
             const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`;
 
             fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        alert('Mesajul a fost trimis cu succes!');
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        showNotification('Message sent successfully!');
                     } else {
-                        alert('Eroare la trimiterea mesajului.');
+                        showNotification('Error sending message.', true);
                     }
                 })
                 .catch(error => {
-                    alert('A apărut o eroare: ' + error.message);
+                    showNotification('An error occurred: ' + error.message, true);
                 });
         }
     </script>
