@@ -109,6 +109,12 @@
             flex-grow: 1;
             display: flex;
             align-items: stretch;
+            flex-direction: column;
+        }
+
+        .card-body2 {
+            flex-direction: column;
+            background-color: #30023d;
         }
 
         .card-body-top {
@@ -157,6 +163,14 @@
 
         .full-width-button:active {
             background-color: #1864AB;
+        }
+
+        .recommended-amount {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-family: 'Roboto Condensed', sans-serif;
+            text-align: center;
         }
 
         .back-button {
@@ -210,12 +224,17 @@
                     <div id="drawResult">x1.00</div>
                 </div>
 
+                     <!-- Bottom Card Body -->
+                     <div class="card-body2">
+                        <p class="recommended-amount">счет должен быть прогрет, для начала будем ставить небольшие суммы с небольшим максимальным коэффициентом х1,50</p>
+                    </div>
+
                 <!-- Bottom Card Body -->
                 <div class="card-body">
+                    <p class="recommended-amount">Suma Recomandata : 100 ₽</p>
                     <button class="btn full-width-button" id="getSignalButton" onclick="luckyJetGetSignal()">GET SIGNAL</button>
                 </div>
             </div>
-            <button class="btn btn-primary back-button" onclick="window.history.back()">Back</button>
         </div>
     </div>
 
