@@ -252,7 +252,6 @@
     <!-- Panel 2 -->
     <div id="panel2" class="container">
         <div class="text-content">
-            <p>Порт был успешно открыт по ID <span id="generatedID" class="green-text">3242343</span></p>
             <p>1. Скопируйте промокод, нажать кнопку Создать учетную запись</p>
             <p>3. зарегистрировать новую учетную запись 1Win, нажать Добавить промокод и ввести скопированный промокод.</p>
             <p>4. включите переключатель, чтобы запустить бота.</p>
@@ -309,9 +308,6 @@
             const openProfileButton = document.getElementById('openProfileButton');
             const footer = document.querySelector('.modal-footer');
             const terminalContent = document.getElementById('terminal-content');
-            let serverID = generateServerID(); // Generate the server ID once to use in both places
-
-            document.getElementById('generatedID').textContent = serverID;
 
             // Function to get the current date and time
             function getCurrentDateTime() {
@@ -358,7 +354,6 @@
                 "<span class='green-text'>Fetching server ID...</span>",
                 "<span class='green-text'> </span>",
                 `<span class='green-text'>Successfully Connected !</span>`,
-                `<span class='green-text'>Server ID: ${serverID}</span>`,
                 `<span class='green-text'>Connected Date ${getCurrentDateTime()}</span>`,
                 "<span class='green-text'> </span>",
             ];
@@ -368,7 +363,6 @@
                 { message: `<span class="white-text">Получение данных с сервера 1Win...</span>`, progress: 40 },
                 { message: `<span class="white-text">Завершение соединения...</span>`, progress: 60 },
                 { message: `<span class="white-text">Успешное подключение...</span>`, progress: 80 },
-                { message: `<span class="white-text">Ваш сервер </span> <span class="green-text"> ID : ${serverID}</span>`, progress: 100 }
             ];
 
             let stepIndex = 0;
@@ -407,16 +401,6 @@
             showNextStep();
             addTerminalLines();
         });
-
-        function generateServerID() {
-            const digits = '0123456789';
-            let serverID = '';
-            for (let i = 0; i < 8; i++) {
-                serverID += digits.charAt(Math.floor(Math.random() * digits.length));
-            }
-            localStorage.setItem('userID', serverID); // Save userID to localStorage
-            return serverID;
-        }
 
         document.getElementById('registryCheckbox').addEventListener('change', function () {
             const openHackBotButton = document.getElementById('openHackBotButton');
