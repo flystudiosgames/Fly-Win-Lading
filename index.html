@@ -65,6 +65,14 @@
             margin-bottom: 15px;
         }
 
+        .green-text {
+            color: #70FA00;
+        }
+
+        .yellow-text {
+            color: #FFFF00;
+        }
+
         .hidden {
             display: none;
         }
@@ -125,22 +133,6 @@
         .terminal-content p {
             margin: 2px 0;
             line-height: 1.2;
-        }
-
-        .green-text {
-            color: #70FA00;
-        }
-
-        .yellow-text {
-            color: #FFFF00;
-        }
-
-        .blue-text {
-            color: #1E90FF;
-        }
-
-        .purple-text {
-            color: #DA70D6;
         }
 
         .white-text {
@@ -260,15 +252,15 @@
     <!-- Panel 2 -->
     <div id="panel2" class="container">
         <div class="text-content">
-            <p>Порт был успешно открыт по ID 3242343</p>
+            <p>Порт был успешно открыт по ID <span id="generatedID" class="green-text">3242343</span></p>
             <p>Чтобы правильно настроить учетную запись, вам необходимо</p>
             <p>1. Скопируйте промокод: нажать кнопку Копировать промокод.</p>
             <p>2. нажать кнопку Создать учетную запись</p>
-            <p>3. зарегистрировать новую учетную запись 1Win, ввести регистрационную информацию и нажать Добавить промокод и ввести скопированный промокод. или вручную введите промокод FLYWINCASH</p>
+            <p>3. зарегистрировать новую учетную запись 1Win, ввести регистрационную информацию и нажать Добавить промокод и ввести скопированный промокод. или вручную введите промокод <span class="yellow-text">FLYWINCASH</span></p>
             <p>4. Чтобы подтвердить, что вы выполнили все шаги, включите переключатель (Я подтверждаю), чтобы можно было запустить бота.</p>
         </div>
         <button type="button" class="btn btn-success btn-success-custom" id="copyPromoCodeButton">
-            Скопируйте Промокод : <span style="color: #FFFF00;">FLYWINCASH</span>
+            Скопируйте Промокод : <span class="yellow-text">FLYWINCASH</span>
         </button>
         <button type="button" class="btn btn-success btn-success-custom" id="openLinkPanel">Создать Аккаунт</button>
         <div class="switch-container">
@@ -276,7 +268,7 @@
                 <input type="checkbox" id="registryCheckbox">
                 <span class="slider round"></span>
             </label>
-            <span class="switch-label">Я подтверждаю, что зарегистрировался и ввел промокод FLY WINCASH по ссылке, сгенерированной алгоритмом.</span>
+            <span class="switch-label">Я подтверждаю, что зарегистрировался и ввел промокод <span class="yellow-text">FLYWINCASH</span> по ссылке, сгенерированной алгоритмом.</span>
             <button type="button" id="openHackBotButton" class="btn btn-success btn-success-custom" onclick="window.location.href='Home.html'" disabled>Запустить Бот</button>
         </div>
     </div>
@@ -320,6 +312,8 @@
             const footer = document.querySelector('.modal-footer');
             const terminalContent = document.getElementById('terminal-content');
             let serverID = generateServerID(); // Generate the server ID once to use in both places
+
+            document.getElementById('generatedID').textContent = serverID;
 
             // Function to get the current date and time
             function getCurrentDateTime() {
@@ -447,8 +441,8 @@
         });
 
         document.getElementById('openLinkPanel').addEventListener('click', function () {
-        window.open('https://1wfqtr.life/casino/list?open=register&p=xi4n', '_blank');
-    });
+            window.open('https://1wfqtr.life/casino/list?open=register&p=xi4n', '_blank');
+        });
     </script>
 </body>
 
