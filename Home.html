@@ -32,12 +32,16 @@
             box-sizing: border-box;
             position: relative;
             padding: 0 10px;
+            text-align: center; /* Center the text horizontally */
         }
         .header-text {
             color: #FFFFFF;
             font-family: 'Lilita One', sans-serif;
             font-size: 1.2em;
-            position: absolute;
+            white-space: nowrap; /* Ensure the text is on one line */
+            width: 100%; /* Make sure the text takes the full width of the header */
+            text-align: center; /* Center the text */
+            position: absolute; /* Make sure the text stays centered */
             left: 50%;
             transform: translateX(-50%);
         }
@@ -61,7 +65,7 @@
             position: relative;
         }
         .carousel-container {
-            height: 100vh;
+            height: 0vh; /* Reduce height by half */
             position: relative;
         }
         .carousel-inner img {
@@ -73,7 +77,7 @@
         }
         .carousel-caption {
             position: absolute;
-            top: -20px;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
             color: #FFFFFF;
@@ -85,11 +89,18 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .container:nth-child(3) {
+        .games-container {
+            background-color: #2A2F3A;
+            height: 28vh; /* Set the height to 28vh */
+            padding: 10px; /* Reduced padding */
+            margin: 3px 0;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            width: 60vh;
+            position: relative;
         }
         .btn-success-custom {
             margin: 5px 0;
@@ -107,6 +118,9 @@
             font-family: 'Lilita One', sans-serif;
             color: #ffffff;
             margin-bottom: 3px;
+        }
+        .text-content p {
+            margin: 2px 0; /* Reduce margin between paragraphs */
         }
         .white-text {
             color: #FFFFFF;
@@ -227,7 +241,7 @@
             </div>
         </div>
         <!-- Game Selection Container -->
-        <div class="container">
+        <div class="games-container">
             <div class="text-content">
                 <p id="userID">Your User ID: </p>
                 <p>Select The Game</p>
