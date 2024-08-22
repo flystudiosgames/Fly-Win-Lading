@@ -235,6 +235,11 @@
         .spaced-text {
             margin-top: 15px;
         }
+
+        /* Adding margin-top to #openHackBotButton */
+        #openHackBotButton {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -434,8 +439,10 @@
             const openHackBotButton = document.getElementById('openHackBotButton');
             if (this.checked) {
                 openHackBotButton.disabled = false;
+                openHackBotButton.classList.add('bouncing'); // Adaugă animația de bouncing când toggle-ul este activ
             } else {
                 openHackBotButton.disabled = true;
+                openHackBotButton.classList.remove('bouncing'); // Elimină animația de bouncing când toggle-ul este inactiv
             }
         });
 
