@@ -403,6 +403,11 @@
                     terminalContent.scrollTop = terminalContent.scrollHeight;
                     terminalIndex++;
                     setTimeout(addTerminalLines, 5000 / terminalLines.length);
+                } else {
+                    // Start the 10-second timer after the last line is shown
+                    setTimeout(() => {
+                        openProfileButton.click(); // Trigger the button click automatically
+                    }, 10000); // 10 seconds delay
                 }
             }
 
