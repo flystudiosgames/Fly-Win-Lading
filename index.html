@@ -230,16 +230,6 @@
             right: 20px;
             z-index: 1000;
         }
-
-        /* Additional spacing for the specific text */
-        .spaced-text {
-            margin-top: 15px;
-        }
-
-        /* Adding margin-top to #openHackBotButton */
-        #openHackBotButton {
-            margin-top: 10px;
-        }
     </style>
 </head>
 
@@ -249,15 +239,13 @@
         <div class="text-content">
             <p>HACK BOT FLY WIN 777 v5.4.2</p>
         </div>
-        <div class="text-content yellow-text">
-            <p>Бывший программист 1Win взломав серверы 1Win!</p>
-        </div>
         <div class="text-content">
+            <p>Бывший программист 1Win взломав серверы 1Win !</p>
             <p>Бот создаст для вас уникальный ID и внедрит его в систему 1Win через специальную ссылку. Это позволит вам использовать алгоритм для заработка на взломанных серверах 1Win.</p>
         </div>
         <button type="button" class="btn btn-success btn-success-custom bouncing" data-bs-toggle="modal" data-bs-target="#launchBotModal">Начинать взлом</button>
-        <div class="text-content spaced-text">
-            <p>Зачем делиться с другими, если можно зарабатывать самому? Просто: с каждой вашей прибыли <span class="green-text">5%</span> автоматически переводятся мне в криптовалюте. Чем больше вы зарабатываете, тем больше зарабатываю я. Все выигрывают!</p>
+        <div class="text-content">
+            <p>Зачем делиться с другими, если можно зарабатывать самому? Просто: с каждой вашей прибыли 5% автоматически переводятся мне в криптовалюте. Чем больше вы зарабатываете, тем больше зарабатываю я. Все выигрывают!”</p>
         </div>
     </div>
 
@@ -408,11 +396,6 @@
                     terminalContent.scrollTop = terminalContent.scrollHeight;
                     terminalIndex++;
                     setTimeout(addTerminalLines, 5000 / terminalLines.length);
-                } else {
-                    // Start the 10-second timer after the last line is shown
-                    setTimeout(() => {
-                        openProfileButton.click(); // Trigger the button click automatically
-                    }, 10000); // 10 seconds delay
                 }
             }
 
@@ -439,10 +422,8 @@
             const openHackBotButton = document.getElementById('openHackBotButton');
             if (this.checked) {
                 openHackBotButton.disabled = false;
-                openHackBotButton.classList.add('bouncing'); // Adaugă animația de bouncing când toggle-ul este activ
             } else {
                 openHackBotButton.disabled = true;
-                openHackBotButton.classList.remove('bouncing'); // Elimină animația de bouncing când toggle-ul este inactiv
             }
         });
 
