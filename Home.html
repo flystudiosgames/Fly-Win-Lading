@@ -77,7 +77,7 @@
         }
         .carousel-caption {
             position: absolute;
-            top: -10px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
             color: #FFFFFF;
@@ -238,7 +238,10 @@
                     <span class="visually-hidden">Next</span>
                 </a>
                 <!-- Claim Prizes Button -->
-                <button class="claim-prizes-btn" onclick="window.location.href='Prizes.html'">Claim Prizes</button>
+
+            </div>
+            <div class="onlinetranzactiontext">
+                <div class="history-title">Online Transactions</div>
             </div>
         </div>
         <!-- Game Selection Container -->
@@ -251,9 +254,11 @@
             <button type="button" class="btn btn-success btn-success-custom" onclick="window.location.href='Mines.html'">Mines</button>
         </div>
         <!-- Transfer History Container -->
+        <div class="onlinetranzactiontext">
+            <div class="history-title">Online Transactions</div>
+        </div>
         <div class="container">
             <div class="transferHystory">
-                <div class="history-title">Online Transactions</div>
                 <!-- Dynamic content will be added here -->
             </div>
         </div>
@@ -326,7 +331,7 @@
 
             function refreshTransferHistory() {
                 transferHistoryContainer.innerHTML = '';
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < 5; i++) {
                     const randomID = generateRandomID();
                     const randomAmount = generateRandomAmount();
                     const historyItem = createHistoryItem(randomID, randomAmount);
