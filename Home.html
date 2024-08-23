@@ -115,6 +115,11 @@
             background-color: #23953e;
         }
 
+        .btn-success-custom.bouncing {
+            background-color: #FFD700; /* Yellow color for ПОДАРКИ button */
+            animation: bounce 2s infinite;
+        }
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {
                 transform: translateY(0);
@@ -127,8 +132,17 @@
             }
         }
 
-        .btn-success-custom.bouncing {
-            animation: bounce 2s infinite;
+        @keyframes press {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.9);
+            }
+        }
+
+        .btn-success-custom.press {
+            animation: press 0.5s;
         }
 
         .onlinetranzactiontext {
@@ -281,8 +295,8 @@
                 <p id="userID">Bаш ID: </p>
                 <p>Выберите игру</p>
             </div>
-            <button type="button" class="btn btn-success btn-success-custom" onclick="window.location.href='LuckyJet.html'">Lucky Jet</button>
-            <button type="button" class="btn btn-success btn-success-custom" onclick="window.location.href='Mines.html'">Mines</button>
+            <button type="button" class="btn btn-success btn-success-custom" id="luckyJetButton" onclick="window.location.href='LuckyJet.html'">Lucky Jet</button>
+            <button type="button" class="btn btn-success btn-success-custom" id="minesButton" onclick="window.location.href='Mines.html'">Mines</button>
         </div>
         <!-- Transfer History Container -->
         <div class="onlinetranzactiontext">
@@ -372,6 +386,26 @@
 
             refreshTransferHistory(); // Initial population
             setInterval(refreshTransferHistory, 3000); // Refresh every 3 seconds
+
+            // Double press effect for buttons
+            const luckyJetButton = document.getElementById('luckyJetButton');
+            const minesButton = document.getElementById('minesButton');
+
+            function triggerDoublePress(button) {
+                button.classList.add('press');
+                setTimeout(() => {
+                    button.classList.remove('press');
+                }, 500);
+            }
+
+            function startDoublePressCycle() {
+                triggerDoublePress(luckyJetButton);
+                setTimeout(() => {
+                    triggerDoublePress(minesButton);
+                }, 3000);
+            }
+
+            setInterval(startDoublePressCycle, 6000); // Repeat cycle every 6 seconds
         });
 
         function navigateToIndex() {
