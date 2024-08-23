@@ -113,6 +113,8 @@
             height: 50px;
             font-size: 1.2em;
             background-color: #23953e;
+            position: relative;
+            z-index: 2; /* Ensure button is above particles */
         }
 
         .btn-success-custom.bouncing {
@@ -240,6 +242,31 @@
         }
         .claim-prizes-btn:hover {
             background-color: #23953e;
+        }
+
+        .particle {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: url('Resources/usdToken.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleMove 0.6s ease-out forwards;
+            z-index: 1; /* Ensure particles are behind buttons */
+        }
+
+        @keyframes particleMove {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(var(--scale)); /* Centered start position */
+            }
+            to {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(calc(var(--scale) * 0.5));
+            }
         }
     </style>
 </head>
@@ -393,6 +420,7 @@
 
             function triggerDoublePress(button) {
                 button.classList.add('press');
+                triggerParticleEffect(button);
                 setTimeout(() => {
                     button.classList.remove('press');
                 }, 500);
@@ -402,11 +430,43 @@
                 triggerDoublePress(luckyJetButton);
                 setTimeout(() => {
                     triggerDoublePress(minesButton);
-                }, 3000);
+                }, 1000);
             }
 
-            setInterval(startDoublePressCycle, 6000); // Repeat cycle every 6 seconds
+            setInterval(startDoublePressCycle, 3000); // Repeat cycle every 6 seconds
         });
+
+        function triggerParticleEffect(button) {
+            const buttonRect = button.getBoundingClientRect();
+            const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+            const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+
+            // Create particles
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Randomize the direction and scale of the particles
+                const angle = Math.random() * 360;
+                const distance = Math.random() * 100 + 50;
+                const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1
+
+                particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+                particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+                particle.style.setProperty('--scale', scale);
+
+                // Set the initial position of the particle relative to the document body
+                particle.style.left = `${buttonCenterX}px`;
+                particle.style.top = `${buttonCenterY}px`;
+
+                document.body.appendChild(particle); // Append directly to the body
+
+                // Remove particle after animation
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
+        }
 
         function navigateToIndex() {
             window.location.href = 'index.html';
@@ -414,7 +474,7 @@
 
         function navigateToPrizes() {
             // Stop the bouncing animation once the button is clicked
-            const button = document.querySelector('.btn-success-custom.bouncing');
+            const button = document.quersySelector('.btn-success-custom.bouncing');
             button.classList.remove('bouncing');
 
             // Redirect to the Prizes page after a short delay
