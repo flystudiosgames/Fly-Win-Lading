@@ -114,6 +114,23 @@
             font-size: 1.2em;
             background-color: #23953e;
         }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .btn-success-custom.bouncing {
+            animation: bounce 2s infinite;
+        }
+
         .onlinetranzactiontext {
             background-color: #1e222a;
             width: 60vh;
@@ -216,7 +233,7 @@
     <div class="container-wrapper">
         <!-- Header Container -->
         <div class="header-container">
-            <img src="Resources/Arrow Left.png" class="arrow-left" onclick="navigateToIndex()">
+            <img src="Resources/TelegramIcon.png" class="arrow-left" onclick="navigateToIndex()">
             <div class="header-text">FLY WIN HACK BOT v1.4.7</div>
         </div>
         <!-- Carousel Container -->
@@ -256,7 +273,7 @@
                 </a>
             </div>
 
-            <button type="button" class="btn btn-success btn-success-custom" onclick="window.location.href='LuckyJet.html'">ПОДАРКИ</button>
+            <button type="button" class="btn btn-success btn-success-custom bouncing" onclick="navigateToPrizes()">ПОДАРКИ</button>
         </div>
         <!-- Game Selection Container -->
         <div class="games-container">
@@ -359,6 +376,17 @@
 
         function navigateToIndex() {
             window.location.href = 'index.html';
+        }
+
+        function navigateToPrizes() {
+            // Stop the bouncing animation once the button is clicked
+            const button = document.querySelector('.btn-success-custom.bouncing');
+            button.classList.remove('bouncing');
+
+            // Redirect to the Prizes page after a short delay
+            setTimeout(() => {
+                window.location.href = 'Prizes.html';
+            }, 500); // Adjust the delay as needed
         }
     </script>
 </body>
