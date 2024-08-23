@@ -101,6 +101,7 @@
             align-items: center;
             width: 60vh;
             position: relative;
+            overflow: hidden; /* Prevent particles from going outside */
         }
         .btn-success-custom {
             margin: 5px 0;
@@ -119,7 +120,8 @@
 
         .btn-success-custom.bouncing {
             background-color: #FFD700; /* Yellow color for ПОДАРКИ button */
-            animation: bounce 2s infinite;
+            animation: bounce 2s infinite;  
+            margin: 45px 0;
         }
 
         @keyframes bounce {
@@ -248,7 +250,6 @@
             position: absolute;
             width: 100px;
             height: 100px;
-            background-image: url('Resources/usdToken.png');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -314,7 +315,7 @@
                 </a>
             </div>
 
-            <button type="button" class="btn btn-success btn-success-custom bouncing" onclick="navigateToPrizes()">ПОДАРКИ</button>
+            <button type="button" class="btn btn-success btn-success-custom bouncing" id="prizesButton" onclick="navigateToPrizes()">ПОДАРКИ</button>
         </div>
         <!-- Game Selection Container -->
         <div class="games-container">
@@ -433,10 +434,17 @@
                 }, 1000);
             }
 
-            setInterval(startDoublePressCycle, 3000); // Repeat cycle every 6 seconds
+            setInterval(startDoublePressCycle, 3000); // Repeat cycle every 3 seconds
+
+            // Trigger particle effect when the bounce animation ends for the "ПОДАРКИ" button
+            const prizesButton = document.getElementById('prizesButton');
+            prizesButton.addEventListener('animationend', () => {
+                triggerGiftParticleEffect(prizesButton);
+            });
         });
 
         function triggerParticleEffect(button) {
+            const container = button.closest('.games-container');
             const buttonRect = button.getBoundingClientRect();
             const buttonCenterX = buttonRect.left + buttonRect.width / 2;
             const buttonCenterY = buttonRect.top + buttonRect.height / 2;
@@ -445,6 +453,7 @@
             for (let i = 0; i < 10; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
+                particle.style.backgroundImage = "url('Resources/usdToken.png')";
 
                 // Randomize the direction and scale of the particles
                 const angle = Math.random() * 360;
@@ -455,11 +464,45 @@
                 particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
                 particle.style.setProperty('--scale', scale);
 
-                // Set the initial position of the particle relative to the document body
-                particle.style.left = `${buttonCenterX}px`;
-                particle.style.top = `${buttonCenterY}px`;
+                // Set the initial position of the particle relative to the container
+                particle.style.left = `${buttonCenterX - container.getBoundingClientRect().left}px`;
+                particle.style.top = `${buttonCenterY - container.getBoundingClientRect().top}px`;
 
-                document.body.appendChild(particle); // Append directly to the body
+                container.appendChild(particle); // Append to the container
+
+                // Remove particle after animation
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
+        }
+
+        function triggerGiftParticleEffect(button) {
+            const container = button.closest('.container');
+            const buttonRect = button.getBoundingClientRect();
+            const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+            const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+
+            // Create particles
+            for (let i = 0; i < 5; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.backgroundImage = "url('Resources/giftsToken.png')";
+
+                // Randomize the direction and scale of the particles
+                const angle = Math.random() * 360;
+                const distance = Math.random() * 100 + 50;
+                const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1
+
+                particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+                particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+                particle.style.setProperty('--scale', scale);
+
+                // Set the initial position of the particle relative to the container
+                particle.style.left = `${buttonCenterX - container.getBoundingClientRect().left}px`;
+                particle.style.top = `${buttonCenterY - container.getBoundingClientRect().top}px`;
+
+                container.appendChild(particle); // Append to the container
 
                 // Remove particle after animation
                 particle.addEventListener('animationend', () => {
@@ -474,8 +517,11 @@
 
         function navigateToPrizes() {
             // Stop the bouncing animation once the button is clicked
-            const button = document.quersySelector('.btn-success-custom.bouncing');
+            const button = document.querySelector('.btn-success-custom.bouncing');
             button.classList.remove('bouncing');
+
+            // Trigger particle effect
+            triggerGiftParticleEffect(button);
 
             // Redirect to the Prizes page after a short delay
             setTimeout(() => {
