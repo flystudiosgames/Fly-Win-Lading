@@ -81,6 +81,10 @@
             color: #70FA00;
         }
 
+        .red-text {
+            color: #FF0000;
+        }
+
         .hidden {
             display: none;
         }
@@ -259,14 +263,14 @@
     <!-- Panel 2 -->
     <div id="panel2" class="container">
         <div class="text-content">
-            <p>1. Скопируйте промокод, нажать кнопку Создать учетную запись</p>
-            <p>3. зарегистрировать новую учетную запись 1Win, нажать Добавить промокод и ввести скопированный промокод.</p>
-            <p>4. включите переключатель, чтобы запустить бота.</p>
+            <p><span class="red-text">1.</span> Скопируйте промокод, нажать кнопку <span class="yellow-text">Создать аккаунт </span></p>
+            <p><span class="red-text">3.</span> зарегистрировать новую учетную запись <span class="blue-text">1Win</span>, нажать <span class="yellow-text">Добавить промокод</span> и ввести скопированный промокод.</p>
+            <p><span class="red-text">4.</span> включите переключатель, чтобы запустить бота.</p>
         </div>
         <button type="button" class="btn btn-success btn-success-custom" id="copyPromoCodeButton">
-            Промокод : <span class="yellow-text">FLYWINCASH</span>
+            СКОПИРОВАТЬ КОД : <span class="yellow-text">FLYWINCASH</span>
         </button>
-        <button type="button" class="btn btn-success btn-success-custom" id="openLinkPanel">Создать Аккаунт</button>
+        <button type="button" class="btn btn-success btn-success-custom" id="openLinkPanel">СОЗДАТЬ АККАУНТ ЗДЕСЬ</button>
         <div class="switch-container">
             <label class="switch">
                 <input type="checkbox" id="registryCheckbox">
@@ -435,8 +439,10 @@
             const openHackBotButton = document.getElementById('openHackBotButton');
             if (this.checked) {
                 openHackBotButton.disabled = false;
+                openHackBotButton.classList.add('bouncing'); // Add bouncing animation
             } else {
                 openHackBotButton.disabled = true;
+                openHackBotButton.classList.remove('bouncing'); // Remove bouncing animation
             }
         });
 
