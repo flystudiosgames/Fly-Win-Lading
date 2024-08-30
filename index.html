@@ -45,21 +45,17 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        .btn-success-custom.bouncing {
-            animation: bounce 1s infinite;
+        .btn-success-custom.click-animation {
+            animation: press 0.5s;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
+        @keyframes press {
+            0%, 100% {
+                transform: scale(1);
             }
 
-            40% {
-                transform: translateY(-10px);
-            }
-
-            60% {
-                transform: translateY(-5px);
+            50% {
+                transform: scale(0.9);
             }
         }
 
@@ -313,6 +309,38 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <script>
+        function triggerClickAnimation(button) {
+            button.classList.add('click-animation');
+            setTimeout(() => {
+                button.classList.remove('click-animation');
+            }, 500); // Duration of the animation
+        }
+
+        function startAnimationSequence() {
+            const buttons = [
+                document.getElementById('copyPromoCodeButton'),
+                document.getElementById('openLinkPanel'),
+                document.getElementById('openHackBotButton')
+            ];
+
+            let index = 0;
+
+            function animateNextButton() {
+                if (index < buttons.length) {
+                    triggerClickAnimation(buttons[index]);
+                    index++;
+                    setTimeout(animateNextButton, 2000); // 2 seconds interval
+                } else {
+                    index = 0; // Reset the index to repeat the cycle
+                    setTimeout(animateNextButton, 2000); // Restart after 2 seconds
+                }
+            }
+
+            animateNextButton(); // Start the animation sequence
+        }
+
+        document.addEventListener('DOMContentLoaded', startAnimationSequence);
+
         document.getElementById('launchBotModal').addEventListener('show.bs.modal', function () {
             const modalLabel = document.getElementById('launchBotModalLabel');
             const progressBar = document.getElementById('progressBar');
