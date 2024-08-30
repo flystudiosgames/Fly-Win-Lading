@@ -49,6 +49,10 @@
             animation: press 0.5s;
         }
 
+        .btn-success-custom.bouncing {
+            animation: bounce 1s infinite;
+        }
+
         @keyframes press {
             0%, 100% {
                 transform: scale(1);
@@ -56,6 +60,20 @@
 
             50% {
                 transform: scale(0.9);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
             }
         }
 
@@ -158,10 +176,6 @@
             opacity: 0.5;
         }
 
-        #openProfileButton.bouncing {
-            animation: bounce 1s infinite;
-        }
-
         #panel1,
         #panel2 {
             display: none;
@@ -225,14 +239,16 @@
         }
 
         .notification {
-            background-color: #62d305;
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Roboto Condensed', sans-serif;
+            font-weight: bold;
             display: none;
             position: fixed;
-            bottom: 20px;
+            top: 20px;
             right: 20px;
             z-index: 1000;
         }
@@ -279,7 +295,7 @@
 
     <!-- Notification -->
     <div id="notification" class="notification">
-        Promocode <span style="color: #FFFF00;">FLYWINCASH</span> has been copied to clipboard!
+        Промокод <span class="yellow-text">FLYWINCASH</span> был скопирован!
     </div>
 
     <!-- Modal -->
@@ -336,7 +352,15 @@
                 }
             }
 
-            animateNextButton(); // Start the animation sequence
+            const panel2 = document.getElementById('panel2');
+
+            const observer = new MutationObserver(() => {
+                if (panel2.classList.contains('active')) {
+                    animateNextButton(); // Start the animation sequence only when panel 2 is active
+                }
+            });
+
+            observer.observe(panel2, { attributes: true, attributeFilter: ['class'] });
         }
 
         document.addEventListener('DOMContentLoaded', startAnimationSequence);
@@ -432,15 +456,6 @@
                         openProfileButton.style.pointerEvents = 'auto';
                         openProfileButton.style.opacity = '1';
                         openProfileButton.classList.add('bouncing');
-
-                        // Redirecționare automată după 5 secunde dacă butonul nu este apăsat
-                        setTimeout(() => {
-                            if (openProfileButton.style.pointerEvents === 'auto') {
-                                document.getElementById('panel1').classList.remove('active');
-                                document.getElementById('panel2').classList.add('active');
-                            }
-                        }, 5000);
-
                     }, 1000);
                 }
             }
@@ -478,6 +493,9 @@
             const promoCode = "FLYWINCASH";
             navigator.clipboard.writeText(promoCode).then(function () {
                 const notification = document.getElementById('notification');
+                notification.innerHTML = `Промокод <span class="yellow-text">FLYWINCASH</span> был скопирован!`;
+                notification.style.fontFamily = 'Roboto Condensed, sans-serif';
+                notification.style.fontWeight = 'bold';
                 notification.style.display = 'block';
                 setTimeout(function () {
                     notification.style.display = 'none';
