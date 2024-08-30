@@ -253,6 +253,10 @@
             right: 20px;
             z-index: 1000;
         }
+        .group-container {
+    margin-top: -30px; /* Mută containerul cu 20px mai sus */
+}
+
     </style>
 </head>
 
@@ -276,23 +280,30 @@
     <!-- Panel 2 -->
     <div id="panel2" class="container">
         <div class="text-content">
-            <p><span class="red-text">1.</span> Скопируйте промокод, нажать кнопку Создать аккаунт </span></p>
-            <p><span class="red-text">3.</span> зарегистрировать новую учетную запись <span class="blue-text">1</span>Win , нажать Добавить промокод и ввести скопированный промокод : <span class="yellow-text">FLYWINCASH</span>
+            <p><span class="red-text">1.</span> Скопируйте промокод, нажать кнопку Создать аккаунт </p>
+            <p><span class="red-text">3.</span> зарегистрировать новую учетную запись <span class="blue-text">1</span>Win , нажать Добавить промокод и ввести скопированный промокод : <span class="yellow-text">FLYWINCASH</span></p>
             <p><span class="red-text">4.</span> включите переключатель, чтобы запустить бота.</p>
         </div>
-        <button type="button" class="btn btn-success btn-success-custom" id="copyPromoCodeButton">
-            СКОПИРОВАТЬ КОД : <span class="yellow-text">FLYWINCASH</span>
-        </button>
-        <button type="button" class="btn btn-success btn-success-custom" id="openLinkPanel">СОЗДАТЬ АККАУНТ ЗДЕСЬ</button>
-        <div class="switch-container">
-            <label class="switch">
-                <input type="checkbox" id="registryCheckbox">
-                <span class="slider round"></span>
-            </label>
-            <span class="switch-label">5. Я зарегистрировался и ввел промокод <span class="yellow-text">FLYWINCASH</span> по ссылке, сгенерированной алгоритмом.</span>
-            <button type="button" id="openHackBotButton" class="btn btn-success btn-success-custom" onclick="window.location.href='Home.html'" disabled>Запустить Бот</button>
+    
+        <!-- Gruparea celor trei elemente într-un container -->
+        <div class="group-container">
+            <button type="button" class="btn btn-success btn-success-custom" id="copyPromoCodeButton">
+                СКОПИРОВАТЬ КОД : <span class="yellow-text">FLYWINCASH</span>
+            </button>
+            <button type="button" class="btn btn-success btn-success-custom" id="openLinkPanel">СОЗДАТЬ АККАУНТ ЗДЕСЬ</button>
+            <p></p>
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="registryCheckbox">
+                    <span class="slider round"></span>
+                </label>
+                <span class="switch-label"><span class="red-text">5.</span> Я зарегистрировался и ввел промокод <span class="yellow-text">FLYWINCASH</span> по ссылке, сгенерированной алгоритмом.</span>
+            </div>
         </div>
+        <p></p>
+        <button type="button" id="openHackBotButton" class="btn btn-success btn-success-custom" onclick="window.location.href='Home.html'" disabled>Запустить Бот</button>
     </div>
+    
 
     <!-- Notification -->
     <div id="notification" class="notification">
