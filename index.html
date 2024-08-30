@@ -299,8 +299,9 @@
                     <input type="checkbox" id="registryCheckbox">
                     <span class="slider round"></span>
                 </label>
-                <span class="switch-label"><span class="red-text">5.</span> Я зарегистрировался и ввел промокод <span class="yellow-text">FLYWINCASH</span> по ссылке, сгенерированной алгоритмом.</span>
+                <span id="switchText" class="switch-label"><span class="red-text">5.</span> Я зарегистрировался и ввел промокод <span class="yellow-text">FLYWINCASH</span> по ссылке, сгенерированной алгоритмом.</span>
             </div>
+            
         </div>
         <p></p>
         <button type="button" id="openHackBotButton" class="btn btn-success btn-success-custom" onclick="window.location.href='Home.html'" disabled>Запустить Бот</button>
@@ -339,6 +340,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <script>
+        document.getElementById('switchText').addEventListener('click', function () {
+    const registryCheckbox = document.getElementById('registryCheckbox');
+    registryCheckbox.checked = !registryCheckbox.checked; // Inversează starea toggle-ului
+
+    // Simulează comportamentul pentru activarea/dezactivarea butonului
+    const openHackBotButton = document.getElementById('openHackBotButton');
+    if (registryCheckbox.checked) {
+        openHackBotButton.disabled = false;
+        openHackBotButton.classList.add('bouncing'); // Add bouncing animation
+    } else {
+        openHackBotButton.disabled = true;
+        openHackBotButton.classList.remove('bouncing'); // Remove bouncing animation
+    }
+});
+
+
         document.addEventListener('DOMContentLoaded', function () {
     const panel2 = document.getElementById('panel2');
     const registryCheckbox = document.getElementById('registryCheckbox');
