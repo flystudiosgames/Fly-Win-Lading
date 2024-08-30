@@ -240,19 +240,21 @@
         }
 
         .notification {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: bold;
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
         .group-container {
     margin-top: -30px; /* Mută containerul cu 20px mai sus */
 }
@@ -281,7 +283,7 @@
     <div id="panel2" class="container">
         <div class="text-content">
             <p><span class="red-text">1.</span> Скопируйте промокод, нажать кнопку Создать аккаунт </p>
-            <p><span class="red-text">3.</span> зарегистрировать новую учетную запись <span class="blue-text">1</span>Win , нажать Добавить промокод и ввести скопированный промокод : <span class="yellow-text">FLYWINCASH</span></p>
+            <p><span class="red-text">3.</span> зарегистрировать новую учетную запись <span class="blue-text">1</span>Win , нажать Добавить промокод и ввести скопированный промокод <span class="yellow-text">FLYWINCASH</span></p>
             <p><span class="red-text">4.</span> включите переключатель, чтобы запустить бота.</p>
         </div>
     
@@ -337,6 +339,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const panel2 = document.getElementById('panel2');
+    const registryCheckbox = document.getElementById('registryCheckbox');
+    const openHackBotButton = document.getElementById('openHackBotButton');
+
+    const observer = new MutationObserver(function () {
+        if (panel2.classList.contains('active')) {
+            registryCheckbox.checked = false; // Dezactivează toggle-ul
+            openHackBotButton.disabled = true; // Dezactivează butonul
+            openHackBotButton.classList.remove('bouncing'); // Elimină animația de bouncing
+        }
+    });
+
+    observer.observe(panel2, { attributes: true, attributeFilter: ['class'] });
+});
+
+
         function triggerClickAnimation(button) {
             button.classList.add('click-animation');
             setTimeout(() => {
