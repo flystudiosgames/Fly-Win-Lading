@@ -219,6 +219,9 @@
             width: 120px;
             height: 120px;
         }
+        #app {
+    display: none; /* Ascunde timerul inițial */
+}
 
         .base-timer__svg {
             transform: scaleX(-1);
@@ -264,7 +267,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 25px;
+            font-size: 20px;
             color: #FFF;
         }
     </style>
@@ -312,47 +315,52 @@
         let hackStep = 0;
 
         function hack() {
-            const outputmessageTMP = document.getElementById('outputmessageTMP');
-            const makeStakeButton = document.getElementById('makeStakeButton');
-            const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
-            const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
-            const additionalText = document.getElementById('additionalText');
+    const outputmessageTMP = document.getElementById('outputmessageTMP');
+    const makeStakeButton = document.getElementById('makeStakeButton');
+    const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
+    const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
+    const additionalText = document.getElementById('additionalText');
+    const appTimer = document.getElementById('app');
 
-            switch (hackStep) {
-                case 0:
-                    outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
-                    makeStakeButton.style.display = "none";
-                    additionalText.style.display = "none";
-                    stakeMakedConfirmeButton.innerHTML = "Начать";
-                    hackStep++;
-                    break;
+    switch (hackStep) {
+        case 0:
+            outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
+            makeStakeButton.style.display = "none";
+            additionalText.style.display = "none";
+            stakeMakedConfirmeButton.innerHTML = "Начать";
+            hackStep++;
+            break;
 
-                case 1:
-                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span class='highlight-big highlight-green'>3</span> ставки на минимальную сумму с коэффициентом <span class='highlight-big highlight-green'>х1.10</span>.";
-                    makeStakeButton.style.display = "block";
-                    additionalText.style.display = "block";
-                    stakeMakedConfirmeButton.innerHTML = "Готово";
-                    hackStep++;
-                    break;
+        case 1:
+            outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='color: yellow; font-size: 1.5em;'>3</span> ставки на минимальную сумму с коэффициентом <span style='color: red; font-size: 1.5em;'>х1.10</span>";
+            makeStakeButton.style.display = "block";
+            additionalText.style.display = "block";
+            stakeMakedConfirmeButton.innerHTML = "Готово";
+            hackStep++;
+            break;
 
-                case 2:
-                    outputmessageTMP.innerHTML = "Сделав ставку <span class='highlight-big highlight-green'>500</span> рублей на несколько попыток, вы получите <span class='highlight-big highlight-red'>х35</span>.";
-                    makeStakeButton.style.display = "block";
-                    additionalText.style.display = "none";
-                    stakeMakedConfirmeButton.style.display = "none";
-                    startTimer();  // Start the timer in case 2
-                    hackStep++;
-                    break;
+        case 2:
+            outputmessageTMP.innerHTML = "Делаем ставку <span style='color: yellow; font-size: 1.5em;'>500₽</span>. за <span style='color: yellow; font-size: 1.5em;'>20 минут!</span>. За несколько попыток вы получите <span style='color: red; font-size: 1.5em;'>х35</span>";
+            makeStakeButton.style.display = "block";
+            additionalText.style.display = "none";
+            stakeMakedConfirmeButton.style.display = "none";
+            
+            // Afișează și pornește timerul
+            appTimer.style.display = "block";
+            startTimer();  // Start the timer in case 2
+            hackStep++;
+            break;
 
-                default:
-                    outputmessageTMP.innerHTML = "Все шаги выполнены.";
-                    additionalText.style.display = "none";
-                    stakeMakedConfirmeButton.innerHTML = "Завершено";
-                    break;
-            }
+        default:
+            outputmessageTMP.innerHTML = "Все шаги выполнены.";
+            additionalText.style.display = "none";
+            stakeMakedConfirmeButton.innerHTML = "Завершено";
+            break;
+    }
 
-            currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
-        }
+    currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
+}
+
 
         // Call hack() on page load to initialize case 0
         window.onload = function () {
@@ -378,7 +386,7 @@
             }
         };
 
-        const TIME_LIMIT = 60; // 1 minute in seconds
+        const TIME_LIMIT = 1200; // 1 minute in seconds
         let timePassed = 0;
         let timeLeft = TIME_LIMIT;
         let timerInterval = null;
