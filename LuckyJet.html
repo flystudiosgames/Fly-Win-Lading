@@ -67,10 +67,10 @@
 
         .image-container {
             position: relative;
-            height: 300px;
+            height: 200px;
             background-color: #251C46;
             width: 100%;
-            overflow: hidden; /* Ensure that the image does not overflow */
+            overflow: hidden;
         }
 
         /* Oscillation animation */
@@ -84,14 +84,14 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1); /* Initial scale and center */
+            transform: translate(-50%, -50%) scale(1);
             width: 100%;
             height: auto;
             max-height: 100%;
             max-width: 100%;
-            object-fit: contain; /* Preserve aspect ratio */
-            animation: oscillate 2s ease-in-out infinite; /* Apply oscillation animation */
-            transition: transform 2s; /* Smooth scaling transition */
+            object-fit: contain;
+            animation: oscillate 2s ease-in-out infinite;
+            transition: transform 2s;
         }
 
         #drawResult {
@@ -100,7 +100,7 @@
             left: 10px;
             color: #944EF5;
             padding: 5px;
-            font-size: 4rem; /* Increased 4 times */
+            font-size: 4rem;
             font-family: 'Lilita One', cursive;
         }
 
@@ -173,20 +173,25 @@
             text-align: center;
         }
 
-        .back-button {
-            margin-top: 3vh;
-            padding: 1vh 3vw;
-            font-size: 2.5vw;
-            border-radius: 20px;
-            width: 50vw;
-            max-width: 150px;
+        .highlight-yellow {
+            color: #FFFF00;
+            text-align: center;
         }
 
-        @media (min-width: 768px) {
-            .back-button {
-                font-size: 16px;
-                width: 150px;
-            }
+        .highlight-red {
+            color: #FF0000;
+        }
+
+        .highlight-green {
+            color: #7AD931;
+        }
+
+        .highlight-big {
+            font-size: 1.5em;
+        }
+
+        .centered-text {
+            text-align: center;
         }
 
         .close {
@@ -215,7 +220,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <!-- Image Container with Overlay Text -->
                 <div class="image-container">
                     <!-- Image -->
@@ -224,119 +228,70 @@
                     <div id="drawResult">x1.00</div>
                 </div>
 
-                     <!-- Bottom Card Body -->
-                     <div class="card-body2">
-                        <p class="recommended-amount">счет должен быть прогрет, для начала будем ставить небольшие суммы с небольшим максимальным коэффициентом х1,50</p>
-                    </div>
+                <!-- Bottom Card Body -->
+                <div class="card-body2">
+                    <p id="outputmessageTMP" class="recommended-amount">Выполните все действия по инструкции, чтобы получить много денег.</p>
+                </div>
 
                 <!-- Bottom Card Body -->
                 <div class="card-body">
-                    <p class="recommended-amount">Suma Recomandata : 100 ₽</p>
-                    <button class="btn full-width-button" id="getSignalButton" onclick="luckyJetGetSignal()">GET SIGNAL</button>
+                    <button class="btn full-width-button" id="makeStakeButton" style="display:none;">СДЕЛАВ СТАВКУ</button>
+                    <p id="additionalText" class="recommended-amount highlight-yellow centered-text" style="display:none;">после того, как вы закончите, нажмите кнопку <span class="highlight-big">"готово"</span></p>
+                    <button class="btn full-width-button" id="stakeMakedConfirmeButton" onclick="hack()">Начать</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Global variables for the Lucky Jet game
-        let increaseSpeed = 0.1; // Speed of incrementing display value
-        let animationDuration = 2000; // Duration of the interpolation animation in ms
-        let minimRange = 2.0;
-        let maximRange = 20.0;
-        let generatedValue;
-        let initialScale = 1.0; // Starting scale for image
-        let scaleAmount = 1.0; // Scale amount to start with
-        let maxScale = 1.5; // Max scale amount
-        let isAnimating = false; // Track if animation is in progress
+        let hackStep = 0;
 
-        // Lucky Jet game signal function
-        function luckyJetGetSignal() {
-            if (isAnimating) return; // Prevent multiple clicks during animation
+        function hack() {
+            const outputmessageTMP = document.getElementById('outputmessageTMP');
+            const makeStakeButton = document.getElementById('makeStakeButton');
+            const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
+            const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
+            const additionalText = document.getElementById('additionalText');
 
-            console.log("LuckyJetGetSignal");
-            isAnimating = true; // Set animation flag
+            switch (hackStep) {
+                case 0:
+                    outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
+                    makeStakeButton.style.display = "none";
+                    additionalText.style.display = "none";
+                    stakeMakedConfirmeButton.innerHTML = "Начать";
+                    hackStep++;
+                    break;
 
-            // Generate a random float number between minimRange and maximRange
-            generatedValue = (Math.random() * (maximRange - minimRange) + minimRange).toFixed(2);
+                case 1:
+                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span class='highlight-big highlight-green'>3</span> ставки на минимальную сумму с коэффициентом <span class='highlight-big highlight-green'>х1.10</span>.";
+                    makeStakeButton.style.display = "block";
+                    additionalText.style.display = "block";
+                    stakeMakedConfirmeButton.innerHTML = "Готово";
+                    hackStep++;
+                    break;
 
-            // Disable the button to prevent multiple clicks during animation
-            setButtonState(false);
+                case 2:
+                    outputmessageTMP.innerHTML = "Сделав ставку <span class='highlight-big highlight-green'>500</span> рублей на несколько попыток, вы получите <span class='highlight-big highlight-red'>х35</span>.";
+                    makeStakeButton.style.display = "block";
+                    additionalText.style.display = "none";
+                    stakeMakedConfirmeButton.style.display = "none";
+                    hackStep++;
+                    break;
 
-            // Get the image element
-            let img = document.getElementById('luckyJetImage');
-
-            // Remove the oscillation animation
-            img.style.animation = 'none';
-
-            // Force a reflow to restart the animation
-            img.offsetHeight; // Trigger a reflow
-
-            // Get the initial scale of the image
-            let currentScale = getComputedStyle(img).transform.match(/matrix\(([^,]+)/)[1];
-            initialScale = parseFloat(currentScale) || 1.0;
-
-            // Set initial scale for scaling effect
-            scaleAmount = initialScale;
-
-            // Start the animation to incrementally display the value and scale the image
-            startScoreInterpolation();
-        }
-
-        // Interpolation animation function
-        function startScoreInterpolation() {
-            let startValue = 1.0;
-            let startTime = Date.now();
-
-            function update() {
-                let elapsedTime = Date.now() - startTime;
-                let progress = Math.min(elapsedTime / animationDuration, 1);
-                let currentValue = (1.0 + (generatedValue - 1.0) * progress).toFixed(2);
-
-                updateDrawResultText(currentValue);
-                updateImageScale(progress);
-
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                } else {
-                    // Reset the image scale after animation
-                    resetImageScale();
-                    isAnimating = false; // Reset animation flag
-                    setButtonState(true);
-                }
+                default:
+                    outputmessageTMP.innerHTML = "Все шаги выполнены.";
+                    additionalText.style.display = "none";
+                    stakeMakedConfirmeButton.innerHTML = "Завершено";
+                    break;
             }
 
-            requestAnimationFrame(update);
+            currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
         }
 
-        // Update the draw result text
-        function updateDrawResultText(value) {
-            document.getElementById('drawResult').textContent = 'x' + value;
-        }
-
-        // Update the image scale
-        function updateImageScale(progress) {
-            let scale = scaleAmount + (maxScale - scaleAmount) * progress;
-            document.getElementById('luckyJetImage').style.transform = `translate(-50%, -50%) scale(${scale})`;
-        }
-
-        // Reset the image scale
-        function resetImageScale() {
-            let img = document.getElementById('luckyJetImage');
-            img.style.transition = 'transform 1s ease-out'; // Smooth transition for reset
-            img.style.transform = `translate(-50%, -50%) scale(${initialScale})`;
-
-            // Restore the oscillation animation
-            setTimeout(() => {
-                img.style.animation = 'oscillate 2s ease-in-out infinite';
-                img.style.transition = ''; // Remove transition after reset
-            }, 1000); // Duration of the reset transition
-        }
-
-        // Enable or disable the button
-        function setButtonState(activeSelf) {
-            document.getElementById('getSignalButton').disabled = !activeSelf;
-        }
+        // Call hack() on page load to initialize case 0
+        window.onload = function () {
+            hack();
+        };
     </script>
 </body>
 
