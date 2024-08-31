@@ -173,22 +173,6 @@
             text-align: center;
         }
 
-        .back-button {
-            margin-top: 3vh;
-            padding: 1vh 3vw;
-            font-size: 2.5vw;
-            border-radius: 20px;
-            width: 50vw;
-            max-width: 150px;
-        }
-
-        @media (min-width: 768px) {
-            .back-button {
-                font-size: 16px;
-                width: 150px;
-            }
-        }
-
         .close {
             color: #FFF;
             font-size: 1.5rem;
@@ -215,26 +199,67 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <!-- Image Container with Overlay Text -->
                 <div class="image-container">
                     <!-- Image -->
+                    <p id="currentStepsTextTMP" class="recommended-amount">ШАГ : 0</p>
                     <img id="luckyJetImage" src="Resources/Lucky-jetPers.png" alt="Lucky Jet Image">
                 </div>
 
-                     <!-- Bottom Card Body -->
-                     <div class="card-body2">
-                        <p class="recommended-amount">Выполните все действия по инструкции, чтобы получить много денег.</p>
-                    </div>
+                <!-- Bottom Card Body -->
+                <div class="card-body2">
+                    <p id="outputmessageTMP" class="recommended-amount">Выполните все действия по инструкции, чтобы получить много денег.</p>
+                </div>
 
                 <!-- Bottom Card Body -->
                 <div class="card-body">
-                    <button class="btn full-width-button" id="getSignalButton">СДЕЛАВ СТАВКУ</button>
-                    <p class="recommended-amount">после того, как вы закончите, нажмите кнопку "готово"</p>
-                    <button class="btn full-width-button" id="getSignalButton">ГОТОВО</button>
+                    <button class="btn full-width-button" id="makeStakeButton" style="display:none;">СДЕЛАВ СТАВКУ</button>
+                    <button class="btn full-width-button" id="stakeMakedConfirmeButton" onclick="hack()">Начать</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        let hackStep = 0;
+
+        function hack() {
+            const outputmessageTMP = document.getElementById('outputmessageTMP');
+            const makeStakeButton = document.getElementById('makeStakeButton');
+            const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
+            const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
+
+            switch (hackStep) {
+                case 0:
+                    outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
+                    makeStakeButton.style.display = "none";
+                    stakeMakedConfirmeButton.innerHTML = "Начать";
+                    hackStep++;
+                    break;
+
+                case 1:
+                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='font-size:120%; color:#7AD931;'>3</span> ставки на минимальную сумму с коэффициентом <span style='font-size:120%; color:#7AD931;'>х1.10</span>.";
+                    makeStakeButton.style.display = "block";
+                    stakeMakedConfirmeButton.innerHTML = "Готово";
+                    hackStep++;
+                    break;
+
+                case 2:
+                    outputmessageTMP.innerHTML = "Сделав ставку <span style='font-size:120%; color:#7AD931;'>500</span> рублей на несколько попыток, вы получите <span style='font-size:120%; color:#FF0000;'>х35</span>.";
+                    makeStakeButton.style.display = "block";
+                    stakeMakedConfirmeButton.style.display = "none";
+                    hackStep++;
+                    break;
+
+                default:
+                    outputmessageTMP.innerHTML = "Все шаги выполнены.";
+                    stakeMakedConfirmeButton.innerHTML = "Завершено";
+                    break;
+            }
+
+            currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
+        }
+    </script>
 </body>
+
 </html>
