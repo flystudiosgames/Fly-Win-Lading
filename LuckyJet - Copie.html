@@ -70,7 +70,7 @@
             height: 200px;
             background-color: #251C46;
             width: 100%;
-            overflow: hidden; /* Ensure that the image does not overflow */
+            overflow: hidden;
         }
 
         /* Oscillation animation */
@@ -84,14 +84,14 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1); /* Initial scale and center */
+            transform: translate(-50%, -50%) scale(1);
             width: 100%;
             height: auto;
             max-height: 100%;
             max-width: 100%;
-            object-fit: contain; /* Preserve aspect ratio */
-            animation: oscillate 2s ease-in-out infinite; /* Apply oscillation animation */
-            transition: transform 2s; /* Smooth scaling transition */
+            object-fit: contain;
+            animation: oscillate 2s ease-in-out infinite;
+            transition: transform 2s;
         }
 
         #drawResult {
@@ -100,7 +100,7 @@
             left: 10px;
             color: #944EF5;
             padding: 5px;
-            font-size: 4rem; /* Increased 4 times */
+            font-size: 4rem;
             font-family: 'Lilita One', cursive;
         }
 
@@ -173,6 +173,27 @@
             text-align: center;
         }
 
+        .highlight-yellow {
+            color: #FFFF00;
+            text-align: center;
+        }
+
+        .highlight-red {
+            color: #FF0000;
+        }
+
+        .highlight-green {
+            color: #7AD931;
+        }
+
+        .highlight-big {
+            font-size: 1.5em;
+        }
+
+        .centered-text {
+            text-align: center;
+        }
+
         .close {
             color: #FFF;
             font-size: 1.5rem;
@@ -202,8 +223,9 @@
                 <!-- Image Container with Overlay Text -->
                 <div class="image-container">
                     <!-- Image -->
-                    <p id="currentStepsTextTMP" class="recommended-amount">ШАГ : 0</p>
                     <img id="luckyJetImage" src="Resources/Lucky-jetPers.png" alt="Lucky Jet Image">
+                    <!-- Text Overlay -->
+                    <div id="drawResult">x1.00</div>
                 </div>
 
                 <!-- Bottom Card Body -->
@@ -214,6 +236,7 @@
                 <!-- Bottom Card Body -->
                 <div class="card-body">
                     <button class="btn full-width-button" id="makeStakeButton" style="display:none;">СДЕЛАВ СТАВКУ</button>
+                    <p id="additionalText" class="recommended-amount highlight-yellow centered-text" style="display:none;">после того, как вы закончите, нажмите кнопку <span class="highlight-big">"готово"</span></p>
                     <button class="btn full-width-button" id="stakeMakedConfirmeButton" onclick="hack()">Начать</button>
                 </div>
             </div>
@@ -228,31 +251,36 @@
             const makeStakeButton = document.getElementById('makeStakeButton');
             const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
             const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
+            const additionalText = document.getElementById('additionalText');
 
             switch (hackStep) {
                 case 0:
                     outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
                     makeStakeButton.style.display = "none";
+                    additionalText.style.display = "none";
                     stakeMakedConfirmeButton.innerHTML = "Начать";
                     hackStep++;
                     break;
 
                 case 1:
-                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='font-size:120%; color:#7AD931;'>3</span> ставки на минимальную сумму с коэффициентом <span style='font-size:120%; color:#7AD931;'>х1.10</span>.";
+                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span class='highlight-big highlight-green'>3</span> ставки на минимальную сумму с коэффициентом <span class='highlight-big highlight-green'>х1.10</span>.";
                     makeStakeButton.style.display = "block";
+                    additionalText.style.display = "block";
                     stakeMakedConfirmeButton.innerHTML = "Готово";
                     hackStep++;
                     break;
 
                 case 2:
-                    outputmessageTMP.innerHTML = "Сделав ставку <span style='font-size:120%; color:#7AD931;'>500</span> рублей на несколько попыток, вы получите <span style='font-size:120%; color:#FF0000;'>х35</span>.";
+                    outputmessageTMP.innerHTML = "Сделав ставку <span class='highlight-big highlight-green'>500</span> рублей на несколько попыток, вы получите <span class='highlight-big highlight-red'>х35</span>.";
                     makeStakeButton.style.display = "block";
+                    additionalText.style.display = "none";
                     stakeMakedConfirmeButton.style.display = "none";
                     hackStep++;
                     break;
 
                 default:
                     outputmessageTMP.innerHTML = "Все шаги выполнены.";
+                    additionalText.style.display = "none";
                     stakeMakedConfirmeButton.innerHTML = "Завершено";
                     break;
             }
