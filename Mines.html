@@ -334,81 +334,93 @@
     </div>
 
     <script>
-        function luckyJetGetSignal() {
-            const gridItems = document.querySelectorAll('.grid-item');
-            const minStars = 4;
-            const maxStars = 8;
-            const numStars = Math.floor(Math.random() * (maxStars - minStars + 1)) + minStars;
-            const starImageUrl = 'Resources/Mines Star.png';
+function luckyJetGetSignal(minStars, maxStars) {
+    const gridItems = document.querySelectorAll('.grid-item');
+    const numStars = Math.floor(Math.random() * (maxStars - minStars + 1)) + minStars;
+    const starImageUrl = 'Resources/Mines Star.png';
 
-            gridItems.forEach(item => {
-                item.style.backgroundImage = `url('Resources/Mines Semi Rounded.png')`;
-                item.classList.remove('show-star');
-            });
+    // Resetarea tuturor elementelor înainte de a genera altele noi
+    gridItems.forEach(item => {
+        item.style.backgroundImage = `url('Resources/Mines Semi Rounded.png')`;
+        item.classList.remove('show-star');
+    });
 
-            const selectedItems = new Set();
+    const selectedItems = new Set();
 
-            while (selectedItems.size < numStars) {
-                const randomIndex = Math.floor(Math.random() * gridItems.length);
-                selectedItems.add(gridItems[randomIndex]);
-            }
+    // Generarea de stele noi
+    while (selectedItems.size < numStars) {
+        const randomIndex = Math.floor(Math.random() * gridItems.length);
+        selectedItems.add(gridItems[randomIndex]);
+    }
 
-            selectedItems.forEach(item => {
-                item.style.backgroundImage = `url('${starImageUrl}')`;
-                item.classList.add('show-star');
-            });
-        }
+    selectedItems.forEach(item => {
+        item.style.backgroundImage = `url('${starImageUrl}')`;
+        item.classList.add('show-star');
+    });
+}
 
         let hackStep = 0;
 
         function hack() {
-            const outputmessageTMP = document.getElementById('outputmessageTMP');
-            const makeStakeButton = document.getElementById('makeStakeButton');
-            const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
-            const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
-            const additionalText = document.getElementById('additionalText');
-            const appTimer = document.getElementById('app');
+    const outputmessageTMP = document.getElementById('outputmessageTMP');
+    const makeStakeButton = document.getElementById('makeStakeButton');
+    const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
+    const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
+    const additionalText = document.getElementById('additionalText');
+    const appTimer = document.getElementById('app');
 
-            switch (hackStep) {
-                case 0:
-                    outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
-                    makeStakeButton.style.display = "none";
-                    additionalText.style.display = "none";
-                    stakeMakedConfirmeButton.innerHTML = "Начать";
-                    hackStep++;
-                    break;
+    switch (hackStep) {
+        case 0:
+            outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
+            makeStakeButton.style.display = "none";
+            additionalText.style.display = "none";
+            stakeMakedConfirmeButton.innerHTML = "Начать";
+            hackStep++;
+            break;
 
-                case 1:
-                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='color: yellow; font-size: 1.5em;'>3</span> ставки на минимальную сумму с коэффициентом";
-                    makeStakeButton.style.display = "block";
-                    additionalText.style.display = "block";
-                    stakeMakedConfirmeButton.innerHTML = "Готово";
-                    hackStep++;
-                    break;
+        case 1:
+            outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='color: yellow; font-size: 1.5em;'>3</span> ставки на минимальную сумму с коэффициентом";
+            makeStakeButton.style.display = "block";
+            additionalText.style.display = "block";
+            stakeMakedConfirmeButton.innerHTML = "Готово";
 
-                case 2:
-                    outputmessageTMP.innerHTML = "Делаем ставку <span style='color: yellow; font-size: 1.5em;'>500₽</span>. за <span style='color: yellow; font-size: 1.5em;'>20 минут!</span>. За несколько попыток вы получите <span id='x35' style='color: red; font-size: 1.5em;'>х0</span>";
-                    makeStakeButton.style.display = "block";
-                    additionalText.style.display = "none";
-                    stakeMakedConfirmeButton.style.display = "none";
+            // Apelăm luckyJetGetSignal cu parametrii pentru case 1
+            luckyJetGetSignal(2, 3);
 
-                    appTimer.style.display = "block";
-                    startTimer();
+            hackStep++;
+            break;
 
-                    startInterpolation();
-                    
-                    hackStep++;
-                    break;
+            case 2:
+    outputmessageTMP.innerHTML = "Делаем ставку <span style='color: yellow; font-size: 1.5em;'>500₽</span>. за <span style='color: yellow; font-size: 1.5em;'>20 минут!</span>. За несколько попыток вы получите <span id='x35' style='color: red; font-size: 1.5em;'>х45</span>";
+    makeStakeButton.style.display = "block";
+    additionalText.style.display = "none";
+    stakeMakedConfirmeButton.style.display = "none";
 
-                default:
-                    outputmessageTMP.innerHTML = "Все шаги выполнены.";
-                    additionalText.style.display = "none";
-                    stakeMakedConfirmeButton.innerHTML = "Завершено";
-                    break;
-            }
+    // Apelăm luckyJetGetSignal cu parametrii pentru case 2
+    luckyJetGetSignal(4, 5);
 
-            currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
-        }
+    // Afișarea timerului cu o mică întârziere
+    setTimeout(() => {
+        appTimer.style.display = "block";
+        startTimer();
+    }, 100); // Întârziere de 100 ms
+
+    startInterpolation();
+    
+    hackStep++;
+    break;
+
+
+        default:
+            outputmessageTMP.innerHTML = "Все шаги выполнены.";
+            additionalText.style.display = "none";
+            stakeMakedConfirmeButton.innerHTML = "Завершено";
+            break;
+    }
+
+    currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
+}
+
 
         window.onload = function () {
             hack();
