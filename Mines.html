@@ -359,9 +359,10 @@ function luckyJetGetSignal(minStars, maxStars) {
     });
 }
 
-        let hackStep = 0;
+let hackStep = 0;
+let generationInterval;
 
-        function hack() {
+function hack() {
     const outputmessageTMP = document.getElementById('outputmessageTMP');
     const makeStakeButton = document.getElementById('makeStakeButton');
     const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
@@ -375,6 +376,12 @@ function luckyJetGetSignal(minStars, maxStars) {
             makeStakeButton.style.display = "none";
             additionalText.style.display = "none";
             stakeMakedConfirmeButton.innerHTML = "Начать";
+
+            // Apelăm luckyJetGetSignal cu un interval de 2 secunde
+            generationInterval = setInterval(() => {
+                luckyJetGetSignal(3, 6);
+            }, 2000);
+
             hackStep++;
             break;
 
@@ -384,32 +391,32 @@ function luckyJetGetSignal(minStars, maxStars) {
             additionalText.style.display = "block";
             stakeMakedConfirmeButton.innerHTML = "Готово";
 
-            // Apelăm luckyJetGetSignal cu parametrii pentru case 1
-            luckyJetGetSignal(2, 3);
+            // Oprire interval generare stele
+            clearInterval(generationInterval);
+            luckyJetGetSignal(1, 2);
 
             hackStep++;
             break;
 
-            case 2:
-    outputmessageTMP.innerHTML = "Делаем ставку <span style='color: yellow; font-size: 1.5em;'>500₽</span>. за <span style='color: yellow; font-size: 1.5em;'>20 минут!</span>. За несколько попыток вы получите <span id='x35' style='color: red; font-size: 1.5em;'>х45</span>";
-    makeStakeButton.style.display = "block";
-    additionalText.style.display = "none";
-    stakeMakedConfirmeButton.style.display = "none";
+        case 2:
+            outputmessageTMP.innerHTML = "Делаем ставку <span style='color: yellow; font-size: 1.5em;'>500₽</span>. за <span style='color: yellow; font-size: 1.5em;'>20 минут!</span>. За несколько попыток вы получите <span id='x35' style='color: red; font-size: 1.5em;'>х45</span>";
+            makeStakeButton.style.display = "block";
+            additionalText.style.display = "none";
+            stakeMakedConfirmeButton.style.display = "none";
 
-    // Apelăm luckyJetGetSignal cu parametrii pentru case 2
-    luckyJetGetSignal(4, 5);
+            // Apelăm luckyJetGetSignal cu parametrii pentru case 2
+            luckyJetGetSignal(8, 15);
 
-    // Afișarea timerului cu o mică întârziere
-    setTimeout(() => {
-        appTimer.style.display = "block";
-        startTimer();
-    }, 100); // Întârziere de 100 ms
+            // Afișarea timerului cu o mică întârziere
+            setTimeout(() => {
+                appTimer.style.display = "block";
+                startTimer();
+            }, 100); // Întârziere de 100 ms
 
-    startInterpolation();
-    
-    hackStep++;
-    break;
-
+            startInterpolation();
+            
+            hackStep++;
+            break;
 
         default:
             outputmessageTMP.innerHTML = "Все шаги выполнены.";
@@ -421,197 +428,196 @@ function luckyJetGetSignal(minStars, maxStars) {
     currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
 }
 
+window.onload = function () {
+    hack();
+};
 
-        window.onload = function () {
-            hack();
-        };
+const FULL_DASH_ARRAY = 188.4;
+const WARNING_THRESHOLD = 10;
+const ALERT_THRESHOLD = 5;
 
-        const FULL_DASH_ARRAY = 188.4;
-        const WARNING_THRESHOLD = 10;
-        const ALERT_THRESHOLD = 5;
+const COLOR_CODES = {
+    info: {
+        color: "green"
+    },
+    warning: {
+        color: "orange",
+        threshold: WARNING_THRESHOLD
+    },
+    alert: {
+        color: "red",
+        threshold: ALERT_THRESHOLD
+    }
+};
 
-        const COLOR_CODES = {
-            info: {
-                color: "green"
-            },
-            warning: {
-                color: "orange",
-                threshold: WARNING_THRESHOLD
-            },
-            alert: {
-                color: "red",
-                threshold: ALERT_THRESHOLD
-            }
-        };
+const TIME_LIMIT = 1200;
+let timePassed = 0;
+let timeLeft = TIME_LIMIT;
+let timerInterval = null;
+let remainingPathColor = COLOR_CODES.info.color;
 
-        const TIME_LIMIT = 1200;
-        let timePassed = 0;
-        let timeLeft = TIME_LIMIT;
-        let timerInterval = null;
-        let remainingPathColor = COLOR_CODES.info.color;
+document.getElementById("app").innerHTML = 
+    `<div class="base-timer">
+        <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <g class="base-timer__circle">
+                <circle class="base-timer__path-elapsed" cx="50" cy="50" r="30"></circle>
+                <path
+                    id="base-timer-path-remaining"
+                    stroke-dasharray="188.4"
+                    class="base-timer__path-remaining ${remainingPathColor}"
+                    d="
+                        M 50, 50
+                        m -30, 0
+                        a 30,30 0 1,0 60,0
+                        a 30,30 0 1,0 -60,0
+                    "
+                ></path>
+            </g>
+        </svg>
+        <span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span>
+    </div>`;
 
-        document.getElementById("app").innerHTML = 
-            `<div class="base-timer">
-                <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <g class="base-timer__circle">
-                        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="30"></circle>
-                        <path
-                            id="base-timer-path-remaining"
-                            stroke-dasharray="188.4"
-                            class="base-timer__path-remaining ${remainingPathColor}"
-                            d="
-                                M 50, 50
-                                m -30, 0
-                                a 30,30 0 1,0 60,0
-                                a 30,30 0 1,0 -60,0
-                            "
-                        ></path>
-                    </g>
-                </svg>
-                <span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span>
-            </div>`;
+function onTimesUp() {
+    clearInterval(timerInterval);
+    localStorage.removeItem('timeLeft');
+    localStorage.removeItem('startTime');
+    timerInterval = null;
+}
 
-        function onTimesUp() {
-            clearInterval(timerInterval);
-            localStorage.removeItem('timeLeft');
-            localStorage.removeItem('startTime');
-            timerInterval = null;
+function startTimer() {
+    if (timerInterval !== null) return;
+
+    const savedTimeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
+    const savedStartTime = parseInt(localStorage.getItem('startTime'), 10);
+
+    if (!isNaN(savedTimeLeft) && !isNaN(savedStartTime)) {
+        timeLeft = savedTimeLeft;
+        timePassed = TIME_LIMIT - timeLeft;
+    } else {
+        timePassed = 0;
+        timeLeft = TIME_LIMIT;
+        localStorage.setItem('startTime', Date.now());
+    }
+
+    timerInterval = setInterval(() => {
+        timePassed++;
+        timeLeft = TIME_LIMIT - timePassed;
+        localStorage.setItem('timeLeft', timeLeft);
+
+        document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+        setCircleDasharray();
+        setRemainingPathColor(timeLeft);
+
+        if (timeLeft <= 0) {
+            onTimesUp();
         }
+    }, 1000);
+}
 
-        function startTimer() {
-            if (timerInterval !== null) return;
+function resetTimer() {
+    clearInterval(timerInterval);
+    timePassed = 0;
+    timeLeft = TIME_LIMIT;
+    localStorage.removeItem('timeLeft');
+    localStorage.removeItem('startTime');
+    document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+    setCircleDasharray();
+    setRemainingPathColor(timeLeft);
+    timerInterval = null;
+}
 
-            const savedTimeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
-            const savedStartTime = parseInt(localStorage.getItem('startTime'), 10);
+function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
 
-            if (!isNaN(savedTimeLeft) && !isNaN(savedStartTime)) {
-                timeLeft = savedTimeLeft;
-                timePassed = TIME_LIMIT - timeLeft;
-            } else {
-                timePassed = 0;
-                timeLeft = TIME_LIMIT;
-                localStorage.setItem('startTime', Date.now());
-            }
+    if (seconds < 10) {
+        seconds = `0${seconds}`;
+    }
 
-            timerInterval = setInterval(() => {
-                timePassed++;
-                timeLeft = TIME_LIMIT - timePassed;
-                localStorage.setItem('timeLeft', timeLeft);
+    return `${minutes}:${seconds}`;
+}
 
-                document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
-                setCircleDasharray();
-                setRemainingPathColor(timeLeft);
+function setRemainingPathColor(timeLeft) {
+    const { alert, warning, info } = COLOR_CODES;
+    const pathRemaining = document.getElementById("base-timer-path-remaining");
 
-                if (timeLeft <= 0) {
-                    onTimesUp();
-                }
-            }, 1000);
-        }
+    if (timeLeft <= alert.threshold) {
+        pathRemaining.classList.remove(warning.color);
+        pathRemaining.classList.add(alert.color);
+    } else if (timeLeft <= warning.threshold) {
+        pathRemaining.classList.remove(info.color);
+        pathRemaining.classList.add(warning.color);
+    } else {
+        pathRemaining.classList.remove(warning.color, alert.color);
+        pathRemaining.classList.add(info.color);
+    }
+}
 
-        function resetTimer() {
-            clearInterval(timerInterval);
-            timePassed = 0;
-            timeLeft = TIME_LIMIT;
-            localStorage.removeItem('timeLeft');
-            localStorage.removeItem('startTime');
-            document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
-            setCircleDasharray();
-            setRemainingPathColor(timeLeft);
-            timerInterval = null;
-        }
+function calculateTimeFraction() {
+    const rawTimeFraction = timeLeft / TIME_LIMIT;
+    return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+}
 
-        function formatTime(time) {
-            const minutes = Math.floor(time / 60);
-            let seconds = time % 60;
+function setCircleDasharray() {
+    const circleDasharray = `${(calculateTimeFraction() * FULL_DASH_ARRAY).toFixed(0)} 188.4`;
+    document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);
+}
 
-            if (seconds < 10) {
-                seconds = `0${seconds}`;
-            }
+function interpolateValue(startValue, endValue, duration, element) {
+    let startTime = null;
 
-            return `${minutes}:${seconds}`;
-        }
+    function animate(currentTime) {
+        if (!startTime) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const value = Math.floor(progress * (endValue - startValue) + startValue);
 
-        function setRemainingPathColor(timeLeft) {
-            const { alert, warning, info } = COLOR_CODES;
-            const pathRemaining = document.getElementById("base-timer-path-remaining");
+        element.innerHTML = `х${value}`;
 
-            if (timeLeft <= alert.threshold) {
-                pathRemaining.classList.remove(warning.color);
-                pathRemaining.classList.add(alert.color);
-            } else if (timeLeft <= warning.threshold) {
-                pathRemaining.classList.remove(info.color);
-                pathRemaining.classList.add(warning.color);
-            } else {
-                pathRemaining.classList.remove(warning.color, alert.color);
-                pathRemaining.classList.add(info.color);
-            }
-        }
-
-        function calculateTimeFraction() {
-            const rawTimeFraction = timeLeft / TIME_LIMIT;
-            return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
-        }
-
-        function setCircleDasharray() {
-            const circleDasharray = `${(calculateTimeFraction() * FULL_DASH_ARRAY).toFixed(0)} 188.4`;
-            document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);
-        }
-
-        function interpolateValue(startValue, endValue, duration, element) {
-            let startTime = null;
-
-            function animate(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                const value = Math.floor(progress * (endValue - startValue) + startValue);
-
-                element.innerHTML = `х${value}`;
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    element.style.animation = "pulse 1s infinite";
-                }
-            }
-
+        if (progress < 1) {
             requestAnimationFrame(animate);
+        } else {
+            element.style.animation = "pulse 1s infinite";
         }
+    }
 
-        function startInterpolation() {
-            const x35Element = document.getElementById('x35');
-            interpolateValue(0, 35, 2000, x35Element);
+    requestAnimationFrame(animate);
+}
+
+function startInterpolation() {
+    const x35Element = document.getElementById('x35');
+    interpolateValue(0, 35, 2000, x35Element);
+}
+
+const style = document.createElement('style');
+style.innerHTML = `
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
         }
-
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes pulse {
-                0% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.1);
-                }
-                100% {
-                    transform: scale(1);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        const savedTimeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
-        const savedStartTime = parseInt(localStorage.getItem('startTime'), 10);
-        if (!isNaN(savedTimeLeft) && !isNaN(savedStartTime)) {
-            const elapsedTime = Math.floor((Date.now() - savedStartTime) / 1000);
-            timeLeft = savedTimeLeft - elapsedTime;
-            if (timeLeft > 0) {
-                timePassed = TIME_LIMIT - timeLeft;
-                startTimer();
-            } else {
-                onTimesUp();
-            }
+        50% {
+            transform: scale(1.1);
         }
-    </script>
+        100% {
+            transform: scale(1);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+const savedTimeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
+const savedStartTime = parseInt(localStorage.getItem('startTime'), 10);
+if (!isNaN(savedTimeLeft) && !isNaN(savedStartTime)) {
+    const elapsedTime = Math.floor((Date.now() - savedStartTime) / 1000);
+    timeLeft = savedTimeLeft - elapsedTime;
+    if (timeLeft > 0) {
+        timePassed = TIME_LIMIT - timeLeft;
+        startTimer();
+    } else {
+        onTimesUp();
+    }
+}
+</script>
 </body>
 
 </html>
