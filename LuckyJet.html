@@ -219,6 +219,7 @@
             width: 120px;
             height: 120px;
         }
+
         #app {
             display: none; /* Ascunde timerul inițial */
         }
@@ -271,6 +272,41 @@
             color: #FFF;
             font-family: 'Roboto Condensed', sans-serif;
         }
+
+        /* Bouncing Animation */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .bouncing {
+            animation: bounce 1s infinite;
+        }
+
+        /* Button Press Animation */
+        .button-press {
+            transform: scale(0.95);
+            transition: transform 0.15s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 
@@ -304,9 +340,9 @@
 
                 <!-- Bottom Card Body -->
                 <div class="card-body">
-                    <button class="btn full-width-button" id="makeStakeButton" style="display:none;">СДЕЛАВ СТАВКУ</button>
+                    <button class="btn full-width-button bouncing" id="makeStakeButton" style="display:none;">СДЕЛАЙ СТАВКУ</button>
                     <p id="additionalText" class="recommended-amount highlight-yellow centered-text" style="display:none;">после того, как вы закончите, нажмите кнопку <span class="highlight-big">"готово"</span></p>
-                    <button class="btn full-width-button" id="stakeMakedConfirmeButton" onclick="hack()">Начать</button>
+                    <button class="btn full-width-button bouncing" id="stakeMakedConfirmeButton" onclick="hack()">Начать</button>
                 </div>
             </div>
         </div>
@@ -319,7 +355,6 @@
             const outputmessageTMP = document.getElementById('outputmessageTMP');
             const makeStakeButton = document.getElementById('makeStakeButton');
             const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
-            const currentStepsTextTMP = document.getElementById('currentStepsTextTMP');
             const additionalText = document.getElementById('additionalText');
             const appTimer = document.getElementById('app');
 
@@ -328,7 +363,11 @@
                     outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить много денег.";
                     makeStakeButton.style.display = "none";
                     additionalText.style.display = "none";
-                    stakeMakedConfirmeButton.innerHTML = "Начать";
+                    stakeMakedConfirmeButton.innerHTML = "НАЧАТЬ >";
+
+                    // Adăugăm animația de bouncing la butonul "Начать"
+                    stakeMakedConfirmeButton.classList.add('bouncing');
+
                     hackStep++;
                     break;
 
@@ -336,7 +375,14 @@
                     outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='color: yellow; font-size: 1.5em;'>3</span> ставки на минимальную сумму с коэффициентом <span style='color: red; font-size: 1.5em;'>х1.10</span>";
                     makeStakeButton.style.display = "block";
                     additionalText.style.display = "block";
-                    stakeMakedConfirmeButton.innerHTML = "Готово";
+                    stakeMakedConfirmeButton.innerHTML = "ГОТОВО >";
+
+                    // Eliminăm animația de bouncing de la butonul "Начать"
+                    stakeMakedConfirmeButton.classList.remove('bouncing');
+
+                    // Start button press animations
+                    startButtonPressAnimation();
+
                     hackStep++;
                     break;
 
@@ -352,7 +398,7 @@
 
                     // Începe interpolarea după ce apare textul
                     startInterpolation();
-                    
+
                     hackStep++;
                     break;
 
@@ -362,11 +408,30 @@
                     stakeMakedConfirmeButton.innerHTML = "Завершено";
                     break;
             }
-
-            currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
         }
 
-        // Call hack() on page load to initialize case 0
+        function startButtonPressAnimation() {
+            const makeStakeButton = document.getElementById('makeStakeButton');
+            const stakeMakedConfirmeButton = document.getElementById('stakeMakedConfirmeButton');
+
+            function pressButton(button) {
+                button.classList.add('button-press');
+                setTimeout(() => {
+                    button.classList.remove('button-press');
+                }, 150); // Durata presării butonului
+            }
+
+            pressButton(makeStakeButton);
+            setTimeout(() => {
+                pressButton(stakeMakedConfirmeButton);
+            }, 1500); // Apasă al doilea buton la 1.5 secunde după primul
+
+            // Reapelați funcția pentru a repeta ciclul
+            setTimeout(() => {
+                startButtonPressAnimation();
+            }, 3000); // Așteaptă 3 secunde pentru a repeta ciclul
+        }
+
         window.onload = function () {
             hack();
         };
@@ -554,7 +619,7 @@
 
         // Restore the timer state if the page is refreshed
         const savedTimeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
-        const savedStartTime = parseInt(localStorage.getItem('startTime'), 10);
+        const savedStartTime = parseInt(localstorage.getItem('startTime'), 10);
         if (!isNaN(savedTimeLeft) && !isNaN(savedStartTime)) {
             const elapsedTime = Math.floor((Date.now() - savedStartTime) / 1000);
             timeLeft = savedTimeLeft - elapsedTime;
@@ -565,7 +630,6 @@
                 onTimesUp();
             }
         }
-        
     </script>
 </body>
 
