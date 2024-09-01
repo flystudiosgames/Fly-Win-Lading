@@ -67,49 +67,46 @@
 
         .image-container {
             position: relative;
-            height: 200px;
+            height: 220px;
             background-color: #251C46;
             width: 100%;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Oscillation animation */
-        @keyframes oscillate {
-            0% {
-                transform: translate(-50%, -50%) translateY(0) scale(1);
-            }
-
-            50% {
-                transform: translate(-50%, -50%) translateY(-4px) scale(1);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) translateY(0) scale(1);
-            }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 0.4rem;
+            width: 210px;
+            height: 210px;
         }
 
-        .image-container img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1);
+        .grid-item {
+            background-image: url('Resources/Mines Semi Rounded.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             width: 100%;
-            height: auto;
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-            animation: oscillate 2s ease-in-out infinite;
-            transition: transform 2s;
+            height: 100%;
         }
 
-        #drawResult {
-            position: absolute;
-            top: -15px;
-            left: 10px;
-            color: #944EF5;
-            padding: 5px;
-            font-size: 4rem;
-            font-family: 'Lilita One', cursive;
+        @keyframes showStar {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .grid-item.show-star {
+            animation: showStar 0.5s ease-in-out forwards;
         }
 
         .card-body {
@@ -144,7 +141,7 @@
         }
 
         #titleLucky {
-            color: #f5ef4e;
+            color: #f5d64e;
         }
 
         #titleJet {
@@ -219,8 +216,9 @@
             width: 120px;
             height: 120px;
         }
+
         #app {
-            display: none; /* Ascunde timerul inițial */
+            display: none;
         }
 
         .base-timer__svg {
@@ -288,12 +286,36 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <!-- Image Container with Overlay Text -->
+                <!-- Image Container with Grid -->
                 <div class="image-container">
-                    <!-- Timer -->
-                    <div id="app" class="base-timer"></div>
-                    <!-- Image -->
-                    <img id="luckyJetImage" src="Resources/Lucky-jetPers.png" alt="Lucky Jet Image">
+                    <div class="grid-container">
+                        <!-- Generate 25 grid items -->
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                        <div class="grid-item"></div>
+                    </div>
                 </div>
 
                 <!-- Bottom Card Body -->
@@ -312,6 +334,31 @@
     </div>
 
     <script>
+        function luckyJetGetSignal() {
+            const gridItems = document.querySelectorAll('.grid-item');
+            const minStars = 4;
+            const maxStars = 8;
+            const numStars = Math.floor(Math.random() * (maxStars - minStars + 1)) + minStars;
+            const starImageUrl = 'Resources/Mines Star.png';
+
+            gridItems.forEach(item => {
+                item.style.backgroundImage = `url('Resources/Mines Semi Rounded.png')`;
+                item.classList.remove('show-star');
+            });
+
+            const selectedItems = new Set();
+
+            while (selectedItems.size < numStars) {
+                const randomIndex = Math.floor(Math.random() * gridItems.length);
+                selectedItems.add(gridItems[randomIndex]);
+            }
+
+            selectedItems.forEach(item => {
+                item.style.backgroundImage = `url('${starImageUrl}')`;
+                item.classList.add('show-star');
+            });
+        }
+
         let hackStep = 0;
 
         function hack() {
@@ -332,7 +379,7 @@
                     break;
 
                 case 1:
-                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='color: yellow; font-size: 1.5em;'>3</span> ставки на минимальную сумму. с установки 3 ловушек";
+                    outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='color: yellow; font-size: 1.5em;'>3</span> ставки на минимальную сумму с коэффициентом";
                     makeStakeButton.style.display = "block";
                     additionalText.style.display = "block";
                     stakeMakedConfirmeButton.innerHTML = "Готово";
@@ -345,11 +392,9 @@
                     additionalText.style.display = "none";
                     stakeMakedConfirmeButton.style.display = "none";
 
-                    // Afișează și pornește timerul
                     appTimer.style.display = "block";
                     startTimer();
 
-                    // Începe interpolarea după ce apare textul
                     startInterpolation();
                     
                     hackStep++;
@@ -365,12 +410,10 @@
             currentStepsTextTMP.innerHTML = "ШАГ : " + hackStep;
         }
 
-        // Call hack() on page load to initialize case 0
         window.onload = function () {
             hack();
         };
 
-        // Timer functionality
         const FULL_DASH_ARRAY = 188.4;
         const WARNING_THRESHOLD = 10;
         const ALERT_THRESHOLD = 5;
@@ -389,14 +432,14 @@
             }
         };
 
-        const TIME_LIMIT = 1200; // 20 minutes in seconds
+        const TIME_LIMIT = 1200;
         let timePassed = 0;
         let timeLeft = TIME_LIMIT;
         let timerInterval = null;
         let remainingPathColor = COLOR_CODES.info.color;
 
-        document.getElementById("app").innerHTML = `
-            <div class="base-timer">
+        document.getElementById("app").innerHTML = 
+            `<div class="base-timer">
                 <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <g class="base-timer__circle">
                         <circle class="base-timer__path-elapsed" cx="50" cy="50" r="30"></circle>
@@ -414,8 +457,7 @@
                     </g>
                 </svg>
                 <span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span>
-            </div>
-        `;
+            </div>`;
 
         function onTimesUp() {
             clearInterval(timerInterval);
@@ -425,7 +467,7 @@
         }
 
         function startTimer() {
-            if (timerInterval !== null) return; // Prevent multiple starts
+            if (timerInterval !== null) return;
 
             const savedTimeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
             const savedStartTime = parseInt(localStorage.getItem('startTime'), 10);
@@ -478,11 +520,7 @@
         }
 
         function setRemainingPathColor(timeLeft) {
-            const {
-                alert,
-                warning,
-                info
-            } = COLOR_CODES;
+            const { alert, warning, info } = COLOR_CODES;
             const pathRemaining = document.getElementById("base-timer-path-remaining");
 
             if (timeLeft <= alert.threshold) {
@@ -521,7 +559,6 @@
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
-                    // După interpolare, aplicăm animația de pulsare
                     element.style.animation = "pulse 1s infinite";
                 }
             }
@@ -531,27 +568,25 @@
 
         function startInterpolation() {
             const x35Element = document.getElementById('x35');
-            interpolateValue(0, 35, 2000, x35Element); // Interpolăm de la 0 la 35 în 2 secunde
+            interpolateValue(0, 35, 2000, x35Element);
         }
 
-        // Stil pentru pulsare
         const style = document.createElement('style');
         style.innerHTML = `
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.1);
+                }
+                100% {
+                    transform: scale(1);
+                }
             }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
         `;
         document.head.appendChild(style);
 
-        // Restore the timer state if the page is refreshed
         const savedTimeLeft = parseInt(localStorage.getItem('timeLeft'), 10);
         const savedStartTime = parseInt(localStorage.getItem('startTime'), 10);
         if (!isNaN(savedTimeLeft) && !isNaN(savedStartTime)) {
@@ -564,7 +599,6 @@
                 onTimesUp();
             }
         }
-        
     </script>
 </body>
 
