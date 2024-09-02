@@ -377,7 +377,6 @@
         <!-- Game Selection Container -->
         <div class="games-container">
             <div class="text-content">
-                <p id="userID">Bаш ID: </p>
                 <p id="telegramText">Bаш Telegram: не было указано </p>
 
             </div>
@@ -447,15 +446,21 @@
             const savedUserID = localStorage.getItem('userID');
             const savedTelegram = localStorage.getItem('telegram');
 
-            if (savedUserID) {
+            if (savedUserID) 
+            {
                 userIDElement.innerHTML = `Bаш <span class="white-text">ID:</span> <span class="green-text">${savedUserID}</span>`;
-            } else {
+            } 
+            else
+            {
                 userIDElement.textContent = "Bаш ID: Not Available";
             }
 
-            if (savedTelegram) {
+            if (savedTelegram) 
+            {
                 telegramTextElement.innerHTML = `Bаш Telegram: <span class="green-text">${savedTelegram}</span>`;
-            } else {
+            }
+            else
+            {
                 telegramTextElement.textContent = "Bаш Telegram: не было указано";
             }
 
@@ -470,88 +475,6 @@
 
             const transferHistoryContainer = document.querySelector('.transferHystory');
 
-            function createHistoryItem(id, amount) {
-                const historyItem = document.createElement('div');
-                historyItem.classList.add('history-item', 'fade-in');
-
-                const idElement = document.createElement('div');
-                idElement.textContent = `User ID: ${id}****`;
-
-                const amountElement = document.createElement('div');
-                amountElement.classList.add('amount');
-                amountElement.textContent = `$0.00`;
-
-                historyItem.appendChild(idElement);
-                historyItem.appendChild(amountElement);
-
-                setTimeout(() => {
-                    animateAmount(amountElement, amount);
-                }, 100);
-
-                return historyItem;
-            }
-
-            function generateRandomID() {
-                const digits = [1, 2, 3, 4, 5, 6, 7, 8, 0];
-                let id = '';
-                for (let i = 0; i < 5; i++) {
-                    const randomIndex = Math.floor(Math.random() * digits.length);
-                    id += digits[randomIndex];
-                }
-                return id;
-            }
-
-            function generateRandomAmount() {
-                return Math.floor(Math.random() * (800 - 50 + 1)) + 50;
-            }
-
-            function animateAmount(element, finalAmount) {
-                let currentAmount = 0;
-                const interval = setInterval(() => {
-                    if (currentAmount < finalAmount) {
-                        currentAmount += Math.ceil(finalAmount / 50);
-                        const randomDecimal = (Math.random() * 0.99).toFixed(2);
-                        element.textContent = `+ $${Math.min(currentAmount, finalAmount).toFixed(0)}.${randomDecimal.slice(2)}`;
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 10);
-            }
-
-            function refreshTransferHistory() {
-                transferHistoryContainer.innerHTML = '';
-                for (let i = 0; i < 5; i++) {
-                    const randomID = generateRandomID();
-                    const randomAmount = generateRandomAmount();
-                    const historyItem = createHistoryItem(randomID, randomAmount);
-                    transferHistoryContainer.appendChild(historyItem);
-                }
-            }
-
-            refreshTransferHistory(); // Initial population
-            setInterval(refreshTransferHistory, 3000); // Refresh every 3 seconds
-
-            // Double press effect for buttons
-            const luckyJetButton = document.getElementById('luckyJetButton');
-            const minesButton = document.getElementById('minesButton');
-
-            function triggerDoublePress(button) {
-                button.classList.add('press');
-                triggerParticleEffect(button);
-                setTimeout(() => {
-                    button.classList.remove('press');
-                }, 500);
-            }
-
-            function startDoublePressCycle() {
-                triggerDoublePress(luckyJetButton);
-                setTimeout(() => {
-                    triggerDoublePress(minesButton);
-                }, 1000);
-            }
-
-            setInterval(startDoublePressCycle, 3000); // Repeat cycle every 3 seconds
-
             // Trigger particle effect when the bounce animation ends for the "ПОДАРКИ" button
             const prizesButton = document.getElementById('prizesButton');
             prizesButton.addEventListener('animationend', () => {
@@ -559,90 +482,8 @@
             });
         });
 
-        function triggerParticleEffect(button) {
-            const container = button.closest('.games-container');
-            const buttonRect = button.getBoundingClientRect();
-            const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-            const buttonCenterY = buttonRect.top + buttonRect.height / 2;
-
-            // Create particles
-            for (let i = 0; i < 10; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.backgroundImage = "url('Resources/usdToken.png')";
-
-                // Randomize the direction and scale of the particles
-                const angle = Math.random() * 360;
-                const distance = Math.random() * 100 + 50;
-                const scale = Math.random() * 0.5 + 0.5;
-
-                particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
-                particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
-                particle.style.setProperty('--scale', scale);
-
-                // Set the initial position of the particle relative to the container
-                particle.style.left = `${buttonCenterX - container.getBoundingClientRect().left}px`;
-                particle.style.top = `${buttonCenterY - container.getBoundingClientRect().top}px`;
-
-                container.appendChild(particle);
-
-                // Remove particle after animation
-                particle.addEventListener('animationend', () => {
-                    particle.remove();
-                });
-            }
-        }
-
-        function triggerGiftParticleEffect(button) {
-            const container = button.closest('.container');
-            const buttonRect = button.getBoundingClientRect();
-            const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-            const buttonCenterY = buttonRect.top + buttonRect.height / 2;
-
-            // Create particles
-            for (let i = 0; i < 5; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.backgroundImage = "url('Resources/giftsToken.png')";
-
-                // Randomize the direction and scale of the particles
-                const angle = Math.random() * 360;
-                const distance = Math.random() * 100 + 50;
-                const scale = Math.random() * 0.5 + 0.5;
-
-                particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
-                particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
-                particle.style.setProperty('--scale', scale);
-
-                // Set the initial position of the particle relative to the container
-                particle.style.left = `${buttonCenterX - container.getBoundingClientRect().left}px`;
-                particle.style.top = `${buttonCenterY - container.getBoundingClientRect().top}px`;
-
-                container.appendChild(particle);
-
-                // Remove particle after animation
-                particle.addEventListener('animationend', () => {
-                    particle.remove();
-                });
-            }
-        }
-
         function navigateToIndex() {
             window.location.href = 'index.html';
-        }
-
-        function navigateToPrizes() {
-            // Stop the bouncing animation once the button is clicked
-            const button = document.querySelector('.btn-success-custom.bouncing');
-            button.classList.remove('bouncing');
-
-            // Trigger particle effect
-            triggerGiftParticleEffect(button);
-
-            // Redirect to the Prizes page after a short delay
-            setTimeout(() => {
-                window.location.href = 'Prizes.html';
-            }, 500);
         }
     </script>
 </body>
