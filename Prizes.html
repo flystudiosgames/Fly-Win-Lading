@@ -106,9 +106,28 @@
             position: relative;
         }
         .carousel-container {
-            height: 0vh;
-            position: relative;
-        }
+    position: relative;
+    height: 0vh;
+    position: relative;
+}
+
+/* Close Button Styles */
+.carousel-container .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #FFF;
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.carousel-container .close:hover {
+    color: #CCC;
+}
+
         .carousel-inner img {
             height: 100%;
             object-fit: cover;
@@ -320,12 +339,46 @@
         .notification.error {
             background-color: #dc3545;
         }
+        .close {
+            color: #FFF;
+            font-size: 1.5rem;
+        }
+
+        .close:hover {
+            color: #CCC;
+        }
+/* Adjust the clickable area of the carousel controls */
+.carousel-control-prev, .carousel-control-next {
+    width: auto;
+    height: auto;
+    padding: 0; /* Remove any padding */
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    width: 50px; /* Set the width of the icon */
+    height: 30px; /* Set the height of the icon */
+}
+
+.carousel-control-prev, .carousel-control-next {
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center align */
+}
+
+.carousel-control-prev {
+    left: 10px; /* Adjust position from left */
+}
+
+.carousel-control-next {
+    right: 10px; /* Adjust position from right */
+}
+
     </style>
 </head>
 <body>
     <div class="container-wrapper">
         <!-- Carousel Container -->
         <div class="container carousel-container">
+              
             <div id="carouselExampleIndicators" class="carousel slide image-container" data-bs-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
@@ -360,7 +413,12 @@
                     <span class="visually-hidden">Next</span>
                 </a>
             </div>
+            <button type="button" class="close" aria-label="Close" onclick="window.location.href='Home.html'">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        
+        
         <!-- Game Selection Container -->
         <div class="games-container">
             <div class="text-content">
