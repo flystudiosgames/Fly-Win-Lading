@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prizes</title>
+    <title>New Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One:wght=400&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -46,46 +46,46 @@
             transform: translateX(-50%);
         }
         .online-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .circle {
-            width: 10px;
-            height: 10px;
-            background-color: #00b248;
-            border-radius: 50%;
-            position: relative;
-        }
+.circle {
+    width: 10px;
+    height: 10px;
+    background-color: #00b248;
+    border-radius: 50%;
+    position: relative;
+}
 
-        .circle::before, .circle::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 15px;
-            height: 15px;
-            background-color: rgba(0, 178, 72, 0.5);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 2s infinite;
-        }
+.circle::before, .circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: rgba(0, 178, 72, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+}
 
-        .circle::after {
-            animation-delay: 0.5s;
-        }
+.circle::after {
+    animation-delay: 0.5s; /* Intârziere pentru a doua undă */
+}
 
-        @keyframes pulse {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(2.5);
-                opacity: 0;
-            }
-        }
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+    }
+}
         .arrow-right {
             position: absolute;
             right: 10px;
@@ -142,7 +142,7 @@
             align-items: center;
             width: 60vh;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Prevent particles from going outside */
         }
         .btn-success-custom {
             margin: 5px 0;
@@ -156,12 +156,12 @@
             font-size: 1.2em;
             background-color: #23953e;
             position: relative;
-            z-index: 2;
+            z-index: 2; /* Ensure button is above particles */
         }
 
         .btn-success-custom.bouncing {
-            background-color: #FFD700;
-            animation: bounce 2s infinite;
+            background-color: #FFD700; /* Yellow color for ПОДАРКИ button */
+            animation: bounce 2s infinite;  
             margin: 45px 0;
         }
 
@@ -192,16 +192,16 @@
 
         .onlinetranzactiontext {
             background-color: #1e222a;
-            width: 60vh;
-            height: 25px;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-            position: relative;
-            text-align: center;
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
+    width: 60vh;
+    height: 25px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: row; /* Asigură aranjarea pe o linie orizontală */
+    gap: 10px; /* Spațiu între indicator și text */
         }
 
         .golden-ticket-img {
@@ -267,7 +267,7 @@
         .amount {
             color: #70FA00;
             transition: transform 0.5s ease;
-        }
+        } 
         .claim-prizes-btn {
             position: absolute;
             bottom: -10px;
@@ -299,35 +299,18 @@
             border-radius: 50%;
             pointer-events: none;
             animation: particleMove 0.6s ease-out forwards;
-            z-index: 1;
+            z-index: 1; /* Ensure particles are behind buttons */
         }
 
         @keyframes particleMove {
             from {
                 opacity: 1;
-                transform: translate(-50%, -50%) scale(var(--scale));
+                transform: translate(-50%, -50%) scale(var(--scale)); /* Centered start position */
             }
             to {
                 opacity: 0;
                 transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(calc(var(--scale) * 0.5));
             }
-        }
-
-        /* Notification styles */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #28a745;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-            z-index: 1000;
-        }
-
-        .notification.error {
-            background-color: #dc3545;
         }
     </style>
 </head>
@@ -335,7 +318,7 @@
     <div class="container-wrapper">
         <!-- Header Container -->
         <div class="header-container">
-            <div class="header-text">подарки от FLY WIN HACK BOT</div>
+            <div class="header-text">FLY WIN HACK BOT v5.4.2</div>
         </div>
         <!-- Carousel Container -->
         <div class="container carousel-container">
@@ -378,28 +361,25 @@
         <div class="games-container">
             <div class="text-content">
                 <p id="userID">Bаш ID: </p>
-                <p id="telegramText">Bаш Telegram: не было указано </p>
-                <p>укажите свой телеграмм и нажмите УЧАСТВОВАТЬ</p>
+                <p>Выберите игру и зарабатывайте деньги</p>
             </div>
             <input type="text" class="form-control" id="telegramInput" placeholder="напиши свои телеграм">
-            <button type="button" class="btn btn-success btn-success-custom" id="minesButton">УЧАСТВОВАТЬ</button>
+            <button type="button" class="btn btn-success btn-success-custom" id="minesButton" onclick="window.location.href='Mines.html'">РЕГИСТРАЦИЯ</button>
+
         </div>
         <!-- Transfer History Container -->
         <div class="onlinetranzactiontext">
             <div class="online-indicator">
                 <div class="circle"></div>
             </div>
-            <div class="history-title">Онлайн Tранзакции 😀</div>
+            <div class="history-title">Онлайн Tранзакции</div>
         </div>
-        <div class="games-container">
-            <div class="text-content">
-                <p id="telegramText">Отлично 😉, вы зарегистрированы в списке участников. через несколько часов мы напишем вам о вашем выигрыше</p>
-                <p>❗ если вы указали неверную телеграмму, укажите телеграмму еще раз и нажмите УЧАСТВОВАТЬ ❗</p>
+        
+        <div class="container">
+            <div class="transferHystory">
+                <!-- Dynamic content will be added here -->
             </div>
         </div>
-
-        <!-- Notification Popup -->
-        <div id="notification" class="notification"></div>
     </div>
 
     <!-- Include jQuery and Bootstrap JS -->
@@ -408,64 +388,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <script>
-        function showNotification(message, isError = false) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = isError ? 'notification error' : 'notification';
-            notification.style.display = 'block';
-
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 2000);
-        }
-
-        function sendMessage(telegramUsername) {
-            const chatId = '6953089880';
-            const botToken = '7239110595:AAEH1ka6DJM6NZtsJM41RcxFK5PPaWQh6FU';
-            const message = encodeURIComponent(telegramUsername);
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        showNotification('Message sent successfully!');
-                    } else {
-                        showNotification('Error sending message.', true);
-                    }
-                })
-                .catch(error => {
-                    showNotification('An error occurred: ' + error.message, true);
-                });
-        }
-
         document.addEventListener('DOMContentLoaded', function () {
             const userIDElement = document.getElementById('userID');
-            const telegramTextElement = document.getElementById('telegramText');
-            const telegramInput = document.getElementById('telegramInput');
             const savedUserID = localStorage.getItem('userID');
-            const savedTelegram = localStorage.getItem('telegram');
-
             if (savedUserID) {
                 userIDElement.innerHTML = `Bаш <span class="white-text">ID:</span> <span class="green-text">${savedUserID}</span>`;
             } else {
                 userIDElement.textContent = "Bаш ID: Not Available";
             }
-
-            if (savedTelegram) {
-                telegramTextElement.innerHTML = `Bаш Telegram: <span class="green-text">${savedTelegram}</span>`;
-            } else {
-                telegramTextElement.textContent = "Bаш Telegram: не было указано";
-            }
-
-            document.getElementById('minesButton').addEventListener('click', function () {
-                const telegramValue = telegramInput.value.trim();
-                if (telegramValue) {
-                    localStorage.setItem('telegram', telegramValue);
-                    telegramTextElement.innerHTML = `Bаш Telegram: <span class="green-text">${telegramValue}</span>`;
-                    sendMessage(telegramValue);
-                }
-            });
 
             const transferHistoryContainer = document.querySelector('.transferHystory');
 
@@ -573,7 +503,7 @@
                 // Randomize the direction and scale of the particles
                 const angle = Math.random() * 360;
                 const distance = Math.random() * 100 + 50;
-                const scale = Math.random() * 0.5 + 0.5;
+                const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1
 
                 particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
                 particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
@@ -583,7 +513,7 @@
                 particle.style.left = `${buttonCenterX - container.getBoundingClientRect().left}px`;
                 particle.style.top = `${buttonCenterY - container.getBoundingClientRect().top}px`;
 
-                container.appendChild(particle);
+                container.appendChild(particle); // Append to the container
 
                 // Remove particle after animation
                 particle.addEventListener('animationend', () => {
@@ -607,7 +537,7 @@
                 // Randomize the direction and scale of the particles
                 const angle = Math.random() * 360;
                 const distance = Math.random() * 100 + 50;
-                const scale = Math.random() * 0.5 + 0.5;
+                const scale = Math.random() * 0.5 + 0.5; // Random scale between 0.5 and 1
 
                 particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
                 particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
@@ -617,7 +547,7 @@
                 particle.style.left = `${buttonCenterX - container.getBoundingClientRect().left}px`;
                 particle.style.top = `${buttonCenterY - container.getBoundingClientRect().top}px`;
 
-                container.appendChild(particle);
+                container.appendChild(particle); // Append to the container
 
                 // Remove particle after animation
                 particle.addEventListener('animationend', () => {
@@ -641,7 +571,7 @@
             // Redirect to the Prizes page after a short delay
             setTimeout(() => {
                 window.location.href = 'Prizes.html';
-            }, 500);
+            }, 500); // Adjust the delay as needed
         }
     </script>
 </body>
