@@ -421,9 +421,9 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.ok) {
-                        showNotification('Message sent successfully!');
+                        showNotification('Вы успешно зарегистрированы!');
                     } else {
-                        showNotification('Error sending message.', true);
+                        showNotification('что-то пошло не так.', true);
                     }
                 })
                 .catch(error => {
@@ -436,10 +436,15 @@
             const telegramTextElement = document.getElementById('telegramText');
             const savedTelegram = localStorage.getItem('telegram');
 
-            if (savedTelegram) {
+            if (savedTelegram) 
+            {
                 telegramTextElement.innerHTML = `Bаш Telegram: <span class="green-text">${savedTelegram}</span>`;
-            } else {
+                alert("savedTelegram : True");
+            }
+            else
+            {
                 telegramTextElement.textContent = "Bаш Telegram: не было указано";
+                alert("savedTelegram : False");
             }
 
             document.getElementById('minesButton').addEventListener('click', function () {
