@@ -157,12 +157,7 @@
             background-color: #23953e;
             position: relative;
             z-index: 2;
-        }
-
-        .btn-success-custom.bouncing {
-            background-color: #FFD700;
             animation: bounce 2s infinite;
-            margin: 45px 0;
         }
 
         @keyframes bounce {
@@ -175,19 +170,6 @@
             60% {
                 transform: translateY(-5px);
             }
-        }
-
-        @keyframes press {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(0.9);
-            }
-        }
-
-        .btn-success-custom.press {
-            animation: press 0.5s;
         }
 
         .onlinetranzactiontext {
@@ -226,6 +208,15 @@
         .green-text {
             color: #70FA00;
         }
+
+        .yellow-text {
+            color: #FFD700;
+        }
+
+        .highlighted {
+            color: #23953e;
+        }
+
         .transferHystory {
             display: flex;
             flex-direction: column;
@@ -378,21 +369,24 @@
             <input type="text" class="form-control" id="telegramInput" placeholder="напиши свои телеграм">
             <div class="text-content">
                 <p id="telegramText">
-                    укажите свой телеграмм и нажмите УЧАСТВОВАТ</p>
-                </div>
-                <button type="button" class="btn btn-success btn-success-custom" id="minesButton">УЧАСТВОВАТЬ</button>
+                    укажите свой телеграмм и нажмите ⬇️<span class="highlighted">УЧАСТВОВАТЬ</span>⬇️</p>
             </div>
+            <button type="button" class="btn btn-success btn-success-custom bouncing" id="minesButton">УЧАСТВОВАТЬ</button>
+        </div>
         <!-- Transfer History Container -->
         <div class="onlinetranzactiontext">
             <div class="online-indicator">
                 <div class="circle"></div>
             </div>
-            <div class="history-title">Онлайн Tранзакции 😀</div>
+            <div class="history-title">ГАРАНТИРОВАННЫЕ ПОДАРКИ</div>
+            <div class="online-indicator">
+                <div class="circle"></div>
+            </div>
         </div>
         <div class="games-container">
             <div class="text-content">
-                <p id="telegramText">Отлично 😉, вы зарегистрированы в списке участников. через несколько часов мы напишем вам о вашем выигрыше</p>
-                <p>❗ если вы указали неверную телеграмму, укажите телеграмму еще раз и нажмите УЧАСТВОВАТЬ </p>
+                <p id="telegramText"><span class="yellow-text">Е</span>сли вы указали неверную телеграмму, укажите телеграмму еще раз и нажмите <span class="highlighted">УЧАСТВОВАТЬ</span></p>
+                <p>Отлично 😉, вы зарегистрированы в списке участников. через несколько часов мы напишем вам о вашем выигрыше</p>
             </div>
         </div>
 
@@ -446,7 +440,6 @@
 
             if (savedUserID) 
             {
-            alert(dd);
                 userIDElement.innerHTML = `Bаш <span class="white-text">ID:</span> <span class="green-text">${savedUserID}</span>`;
             } 
             else
