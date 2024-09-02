@@ -432,27 +432,13 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            const userIDElement = document.getElementById('userID');
-            const telegramTextElement = document.getElementById('telegramText');
             const telegramInput = document.getElementById('telegramInput');
-            const savedUserID = localStorage.getItem('userID');
+            const telegramTextElement = document.getElementById('telegramText');
             const savedTelegram = localStorage.getItem('telegram');
 
-            if (savedUserID) 
-            {
-                userIDElement.innerHTML = `Bаш <span class="white-text">ID:</span> <span class="green-text">${savedUserID}</span>`;
-            } 
-            else
-            {
-                userIDElement.textContent = "Bаш ID: Not Available";
-            }
-
-            if (savedTelegram) 
-            {
+            if (savedTelegram) {
                 telegramTextElement.innerHTML = `Bаш Telegram: <span class="green-text">${savedTelegram}</span>`;
-            }
-            else
-            {
+            } else {
                 telegramTextElement.textContent = "Bаш Telegram: не было указано";
             }
 
@@ -463,14 +449,6 @@
                     telegramTextElement.innerHTML = `Bаш Telegram: <span class="green-text">${telegramValue}</span>`;
                     sendMessage(telegramValue);
                 }
-            });
-
-            const transferHistoryContainer = document.querySelector('.transferHystory');
-
-            // Trigger particle effect when the bounce animation ends for the "ПОДАРКИ" button
-            const prizesButton = document.getElementById('prizesButton');
-            prizesButton.addEventListener('animationend', () => {
-                triggerGiftParticleEffect(prizesButton);
             });
         });
 
