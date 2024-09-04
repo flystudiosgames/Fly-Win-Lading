@@ -131,7 +131,15 @@
             padding: 0.5rem 1rem;
             border-bottom: 1px solid #333333;
         }
-
+#progresSteps {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Ensure the text is centered */
+    font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
         .card-body-top h5 {
             font-size: 1rem;
             color: #FFF;
@@ -314,14 +322,16 @@
         <div class="card-container">
             <div class="card">
                 <!-- Top Card Body -->
-                <div class="card-body-top">
-                    <h5>
-                        <span id="titleLucky">MINES</span>
-                    </h5>
-                    <button type="button" class="close" aria-label="Close" onclick="window.location.href='Home.html'">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            <div class="card-body-top">
+    <h5>
+        <span id="titleLucky">MINES</span>
+    </h5>
+    <span id="progresSteps">Шаг 1/3</span> <!-- This will update dynamically -->
+    <button type="button" class="close" aria-label="Close" onclick="window.location.href='Home.html'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
                 <!-- Image Container with Grid -->
                 <div class="image-container">
                     <div class="grid-container">
@@ -422,6 +432,8 @@ function hack() {
             // Adăugăm animația de bouncing la butonul "Начать"
             stakeMakedConfirmeButton.classList.add('bouncing');
 
+                    // Update progress step to Шаг 1/3
+            progresSteps.innerHTML = "Шаг 1/3";
             hackStep++;
             break;
 
@@ -440,6 +452,9 @@ function hack() {
 
             // Start button press animations
             startButtonPressAnimation();
+
+                    // Update progress step to Шаг 2/3
+            progresSteps.innerHTML = "Шаг 2/3";
 
             hackStep++;
             break;
@@ -463,6 +478,9 @@ function hack() {
             }, 100); // Întârziere de 100 ms
 
             startInterpolation();
+
+            // Update progress step to Шаг 3/3
+            progresSteps.innerHTML = "Шаг 3/3";
             
             hackStep++;
             break;

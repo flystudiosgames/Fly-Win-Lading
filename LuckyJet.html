@@ -134,6 +134,16 @@
             padding: 0.5rem 1rem;
             border-bottom: 1px solid #333;
         }
+        
+        #progresSteps {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Center the text */
+    font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
 
         .card-body-top h5 {
             font-size: 1rem;
@@ -317,15 +327,17 @@
         <div class="card-container">
             <div class="card">
                 <!-- Top Card Body -->
-                <div class="card-body-top">
-                    <h5>
-                        <span id="titleLucky">LUCKY</span>
-                        <span id="titleJet">JET</span>
-                    </h5>
-                    <button type="button" class="close" aria-label="Close" onclick="window.location.href='Home.html'">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            <div class="card-body-top">
+    <h5>
+        <span id="titleLucky">LUCKY</span>
+        <span id="titleJet">JET</span>
+    </h5>
+    <span id="progresSteps">Шаг 1/3</span> <!-- Progress steps -->
+    <button type="button" class="close" aria-label="Close" onclick="window.location.href='Home.html'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
                 <!-- Image Container with Overlay Text -->
                 <div class="image-container">
                     <!-- Timer -->
@@ -370,6 +382,9 @@
                     // Adăugăm animația de bouncing la butonul "Начать"
                     stakeMakedConfirmeButton.classList.add('bouncing');
 
+                    // Update progress step to Шаг 1/3
+                    progresSteps.innerHTML = "Шаг 1/3";
+                    
                     hackStep++;
                     break;
 
@@ -384,6 +399,9 @@
 
                     // Start button press animations
                     startButtonPressAnimation();
+
+                    // Update progress step to Шаг 2/3
+                    progresSteps.innerHTML = "Шаг 2/3";
 
                     hackStep++;
                     break;
@@ -400,6 +418,9 @@
 
                     // Începe interpolarea după ce apare textul
                     startInterpolation();
+
+                    // Update progress step to Шаг 3/3
+                    progresSteps.innerHTML = "Шаг 3/3";
 
                     hackStep++;
                     break;
