@@ -18,7 +18,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #090F1E;
+            background-color: #171b24;
             color: #FFF;
             font-family: Arial, sans-serif;
             overflow: hidden;
@@ -422,7 +422,7 @@ function hack() {
             outputmessageTMP.innerHTML = "Выполните все действия по инструкции, чтобы получить <span style='color: red; font-size: 1.5em;'>х35</span>";
             makeStakeButton.style.display = "none";
             additionalText.style.display = "none";
-            stakeMakedConfirmeButton.innerHTML = "НАЧАТЬ ➡️";
+            stakeMakedConfirmeButton.innerHTML = "➡️ НАЧАТЬ ➡️";
 
             // Apelăm luckyJetGetSignal cu un interval de 2 secunde
     
@@ -431,33 +431,12 @@ function hack() {
 
                     // Update progress step to Шаг 1/3
             progresSteps.innerHTML = "Шаг 1/2";
-            hackStep+=2;
+            hackStep++;
             break;
 
         case 1:
-            outputmessageTMP.innerHTML = "Сначала необходимо сделать <span style='color: yellow; font-size: 1.5em;'>3</span> ставки на минимальную сумму с коэффициентом";
-            makeStakeButton.style.display = "block";
-            additionalText.style.display = "block";
-            stakeMakedConfirmeButton.innerHTML = "ГОТОВО ➡️";
+outputmessageTMP.innerHTML = "Делаем ставку <span style='color: yellow; font-size: 1.5em;'>500₽</span> по модели выше. После нескольких попыток вы получите коэффициент <span id='x35' style='color: red; font-size: 1.5em;'>х35</span>";
 
-            // Oprire interval generare stele
-            clearInterval(generationInterval);
-            luckyJetGetSignal(1, 2);
-
-            // Eliminăm animația de bouncing de la butonul "Начать"
-            stakeMakedConfirmeButton.classList.remove('bouncing');
-
-            // Start button press animations
-            startButtonPressAnimation();
-
-                    // Update progress step to Шаг 2/3
-            progresSteps.innerHTML = "Шаг 2/3";
-
-            //hackStep++;
-            break;
-
-        case 2:
-            outputmessageTMP.innerHTML = "Делаем ставку <span style='color: yellow; font-size: 1.5em;'>500₽</span> по модели выше За несколько попыток вы получите <span id='x35' style='color: red; font-size: 1.5em;'>х45</span> после нескольких ставок по 500₽ вы получите х35 100%";
             makeStakeButton.style.display = "block";
             additionalText.style.display = "none";
             stakeMakedConfirmeButton.style.display = "none";
